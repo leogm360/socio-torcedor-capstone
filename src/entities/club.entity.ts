@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from "typeorm";
 
 @Entity("club")
@@ -19,4 +20,7 @@ export class Club {
 
   @UpdateDateColumn()
   readonly update_at: Date;
+
+  /*@OneToMany(type => User, user => user.club)
+  user: User*/
 }

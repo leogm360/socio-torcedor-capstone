@@ -4,9 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
   JoinTable,
   ManyToMany,
+  ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 
@@ -42,21 +42,23 @@ export class User {
   @UpdateDateColumn()
   readonly update_at: Date;
 
-  @OneToMany((type) => Address, { eager: true })
+  @ManyToOne((type) => Address, (address) => user.address, { eager: true })
   @JoinTable()
-  address_id: Address.id;
+  address: Address;
 
-  @OneToMany((type) => Partnerships, { eager: true })
+  @ManyToOne((type) => Partnerships, (partnership) => user.partnership, {
+    eager: true,
+  })
   @JoinTable()
-  partnership_id: Partnerships.id;
+  partnership: Partnerships;
 
-  @OneToMany((type) => Club, { eager: true })
+  @ManyToOne((type) => Club, (club) => user.club, { eager: true })
   @JoinTable()
-  club_id: Club.id;
+  club: Club;
 
   @ManyToMany((type) => Matches, { eager: true })
   @JoinTable()
-  matcher_id: Matches.id;
+  matcher: Matches;
 
   constructor() {
     if (!this.id) {

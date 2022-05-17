@@ -207,8 +207,8 @@ OBS.: Chaves não presentes no schema serão removidas.
 {
 	"id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
 	"name": "Leonardo Moraes",
-	"user_name": "leogm360",
-	"email": "leogm360@gmail.com",
+	"user_name": "leo360",
+	"email": "leonardo@email.com",
   "age": 20,
   "gender": "Masculino",
   "phone": "99123456789",
@@ -219,7 +219,9 @@ OBS.: Chaves não presentes no schema serão removidas.
     "complement": "Prédio",
     "city": "Rio de Janeiro",
     "state": "RJ",
-    "country": "Brasil"  
+    "country": "Brasil",
+    "created_at": "2022-05-15 16:29:51.350149",
+    "updated_at": "2022-05-15 16:29:51.350149"
   } 
 	"is_adm": true,
 	"partnership": 1,
@@ -231,11 +233,11 @@ OBS.: Chaves não presentes no schema serão removidas.
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 409 Conflict   | Email already registered. |
+| 409 Conflict   | Conflict, resource already registered. |
 
 ---
 
-### 1.2. **Listando Usuários**
+### 1.2. **Login de usuário**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -243,9 +245,56 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ### Exemplo de Request:
 ```
-GET /users
-Host: http://suaapi.com/v1
+GET /users/login
+Host: 
 Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+{
+	"user_name": "leo360",
+	"password": "123456789",
+}
+ou
+{
+	"email": "leonardo@email.com",
+	"password": "123456789",
+}
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+	{
+		"message": "User logged in.",
+		"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+	}
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 404 Not Found   | Resource not found. |
+| 401 Unauthorized| User/password is invalid. |
+
+
+---
+
+### 1.3. **Listar todos usuários**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/users/`
+
+### Exemplo de Request:
+```
+GET /users
+Host: **********
+Authorization: token, isAdm
 Content-type: application/json
 ```
 
@@ -260,21 +309,42 @@ Vazio
 ```
 ```json
 [
-	{
-		"id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
-		"name": "Eduardo",
-		"email": "edu@mail.com",
-		"isAdm": true
-	}
+  {
+  "id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
+  "name": "Leonardo Moraes",
+  "user_name": "leo360",
+  "email": "leonardo@email.com",
+  "age": 20,
+  "gender": "Masculino",
+  "phone": "99123456789",
+  "address":{
+    "zip_code":"12345678",
+    "street": "Rua sete de setembro",
+    "number": 26,
+    "complement": "Prédio",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "country": "Brasil",
+    "created_at": "2022-05-15 16:29:51.350149",
+    "updated_at": "2022-05-15 16:29:51.350149"
+  } 
+  "is_adm": true,
+  "partnership": 1,
+  "created_at": "2022-05-15 16:29:51.350149",
+  "updated_at": "2022-05-15 16:29:51.350149"
+  }
 ]
 ```
 
 ### Possíveis Erros:
-Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User must be an admin to access this resource. |
+
 
 ---
 
-### 1.3. **Listar Usuário por ID**
+### 1.4. **Listar Usuário por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -283,8 +353,8 @@ Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
 ### Exemplo de Request:
 ```
 GET /users/9cda28c9-e540-4b2c-bf0c-c90006d37893
-Host: http://suaapi.com/v1
-Authorization: None
+Host: **********
+Authorization: token, isAdm
 Content-type: application/json
 ```
 
@@ -303,26 +373,47 @@ Vazio
 200 OK
 ```
 ```json
-{
-	"id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
-	"name": "Eduardo",
-	"email": "edu@mail.com",
-	"isAdm": true
-}
+  {
+  "id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
+  "name": "Leonardo Moraes",
+  "user_name": "leo360",
+  "email": "leonardo@email.com",
+  "age": 20,
+  "gender": "Masculino",
+  "phone": "99123456789",
+  "address":{
+    "zip_code":"12345678",
+    "street": "Rua sete de setembro",
+    "number": 26,
+    "complement": "Prédio",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "country": "Brasil",
+    "created_at": "2022-05-15 16:29:51.350149",
+    "updated_at": "2022-05-15 16:29:51.350149"
+  } 
+  "is_adm": true,
+  "partnership": 1,
+  "created_at": "2022-05-15 16:29:51.350149",
+  "updated_at": "2022-05-15 16:29:51.350149"
+  }
 ```
 
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
+| 403 Forbidden   | User must be an admin to access this resource. |
 | 404 Not Found   | User not found. |
 
 ---
 
 ## 2. **Partnerships**
+[ Voltar para os Endpoints ](#5-endpoints)
 
 ---
 
 ## 3. **Rewards**
+[ Voltar para os Endpoints ](#5-endpoints)
 
 ---
 

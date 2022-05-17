@@ -51,11 +51,14 @@ export class User {
   partnership: Partnerships;
 
   @OneToMany((type) => Club, club => club.users, { eager: true })
+
+ 
   @JoinTable()
   club: Club;
 
   @ManyToMany((type) => Matches, { eager: true })
   @JoinTable()
+
   matches: Matches[];*/
 
   constructor() {

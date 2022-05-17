@@ -42,23 +42,23 @@ export class User {
   @UpdateDateColumn()
   readonly update_at: Date;
 
-  @ManyToOne((type) => Address, (address) => user.address, { eager: true })
+  @ManyToOne((type) => Address, (address) => address.users, { eager: true })
   @JoinTable()
   address: Address;
 
-  @ManyToOne((type) => Partnerships, (partnership) => user.partnership, {
+  @ManyToOne((type) => Partnerships, (partnership) => partnership.users, {
     eager: true,
   })
   @JoinTable()
   partnership: Partnerships;
 
-  @ManyToOne((type) => Club, (club) => user.club, { eager: true })
+  @ManyToOne((type) => Club, (club) => club.users, { eager: true })
   @JoinTable()
   club: Club;
 
   @ManyToMany((type) => Matches, { eager: true })
   @JoinTable()
-  matcher: Matches;
+  matcher: Matches[];
 
   constructor() {
     if (!this.id) {

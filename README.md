@@ -88,8 +88,21 @@ yarn typeorm migration:run -d src/data-source.ts
 	- [PATCH - /users/me](#17-atualizar-próprio-usuário-logado)
 	- [DELETE - /users/:user_id](#18-deletar-usuário-por-id)
 	- [DELETE - /users/me](#19-deletar-próprio-usuário-logado)
+	
 - [Partnerships](#2-partnerships)
+	- [POST - /partnerships](#21-criação-de-plano)
+	- [GET - /partnerships/](#22-listar-todos-planos)
+	- [GET - /partnerships/:partnership_id](#23-listar-plano-por-id)
+	- [GET - /partnerships/:partnership_id/rewards](#24-listar-benefícios-de-plano-por-id)
+	- [PATCH - /partnerships/:partnership_id](#25-atualizar-plano-por-id)
+	- [DELETE - /partnerships/:partnership_id](#26-deletar-plano-por-id) 
+	
 - [Rewards](#3-rewards)
+ 	- [POST - /rewards](#31-criação-de-benefício)
+	- [GET - /rewards/](#32-listar-todos-benefícios)
+	- [GET - /rewards/:reward_id](#33-listar-benefício-por-id)
+	- [PATCH - /rewards/:reward_id](#34-atualizar-benefício-por-id)
+	- [DELETE - /rewards/:reward_id](#35-deletar-benefício-por-id) 
 
 ---
 
@@ -679,10 +692,49 @@ Vazio
 ## 2. **Partnerships**
 [ Voltar para os Endpoints ](#5-endpoints)
 
+O objeto Partnership é definido como:
+
+| Campo         | Tipo   | Descrição                                       |
+| --------------|--------|-------------------------------------------------|
+| id            | string | Identificador único do plano                    |
+| name          | string | O nome do plano                                 |
+| price         | number | O preço do plano                                |
+| created_at    | date   | Data de criação do plano                        |
+| updated_at    | date   | Data de atualização do plano                    |
+| rewards_id    | number | Referência ao benefício na tabelas rewards      |
+
+
+
+### Endpoints
+
+| Método   | Rota          | Descrição                               |
+|----------|---------------|-----------------------------------------|
+| POST     | /partnerships 			| Criação de um plano                     
+| GET      | /partnerships     			| Lista todos os planos                 
+| GET      | /partnerships/:partnership_id      | Lista um único plano pelo seu ID
+| GET      | /partnerships/:partnership_id/rewards  | Lista os benefícios de um plano por seu ID
+| PATCH    | /partnerships/:partnership_id      | Atualiza os dados de um único plano
+| DELETE   | /partnerships/:partnership_id      | Deleta um único plano
+
+
+---
+
+### 2.1. **Criação de Plano**
+### 2.2. **Listar todos planos**
+### 2.3. **Listar Plano por ID**
+### 2.4. **Listar benefícios de Plano por ID**
+### 2.5. **Atualizar Plano por ID**
+### 2.6. **Deletar Plano por ID**
+
 ---
 
 ## 3. **Rewards**
 [ Voltar para os Endpoints ](#5-endpoints)
+### 3.1. **Criação de Benefício**
+### 3.2. **Listar todos Benefícios**
+### 3.3. **Listar Benefício por ID**
+### 3.4. **Atualizar Benefício por ID**
+### 3.5. **Deletar Benefício por ID**
 
 ---
 

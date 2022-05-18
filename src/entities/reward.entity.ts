@@ -4,9 +4,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
 } from "typeorm";
-import { Partnership } from "./partnership.entity";
 
 @Entity("rewards")
 export class Reward {
@@ -24,7 +22,4 @@ export class Reward {
 
   @UpdateDateColumn()
   readonly update_at: Date;
-
-  @ManyToOne((type) => Partnership, (partnership) => partnership.rewards)
-  partnership: Partnership;
 }

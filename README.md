@@ -407,6 +407,275 @@ Vazio
 
 ---
 
+### 1.5. **Listar próprio usuário logado**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/users/me`
+
+### Exemplo de Request:
+```
+GET /users/me
+Host: **********
+Authorization: token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro   | Tipo        | Descrição                             |
+|-------------|-------------|---------------------------------------|
+| header      | string      | Dado do usuário retirado do jwt(authorization header) |
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+  {
+  "id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
+  "name": "Leonardo Moraes",
+  "user_name": "leo360",
+  "email": "leonardo@email.com",
+  "age": 20,
+  "gender": "Masculino",
+  "phone": "99123456789",
+  "address":{
+    "zip_code":"12345678",
+    "street": "Rua sete de setembro",
+    "number": 26,
+    "complement": "Prédio",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "country": "Brasil",
+    "created_at": "2022-05-15 16:29:51.350149",
+    "updated_at": "2022-05-15 16:29:51.350149"
+  } 
+  "is_adm": true,
+  "partnership": 1,
+  "created_at": "2022-05-15 16:29:51.350149",
+  "updated_at": "2022-05-15 16:29:51.350149"
+  }
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User cannot access this resource. |
+
+---
+
+### 1.6. **Atualizar usuário por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/users/:user_id`
+
+### Exemplo de Request:
+```
+PATCH /users/9cda28c9-e540-4b2c-bf0c-c90006d37893
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro   | Tipo        | Descrição                             |
+|-------------|-------------|---------------------------------------|
+| user_id     | string      | Identificador único do usuário (User) |
+
+### Corpo da Requisição:
+```json
+  "name": "Leonardo Moraes de Almeida",
+  "age": 45,
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+  {
+  "id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
+  "name": "Leonardo Moraes de Almeida",
+  "user_name": "leo360",
+  "email": "leonardo@email.com",
+  "age": 45,
+  "gender": "Masculino",
+  "phone": "99123456789",
+  "address":{
+    "zip_code":"12345678",
+    "street": "Rua sete de setembro",
+    "number": 26,
+    "complement": "Prédio",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "country": "Brasil",
+    "created_at": "2022-05-15 16:29:51.350149",
+    "updated_at": "2022-05-15 16:29:51.350149"
+  } 
+  "is_adm": true,
+  "partnership": 1,
+  "created_at": "2022-05-15 16:29:51.350149",
+  "updated_at": "2022-05-25 18:20:21.305144"
+  }
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User cannot access this resource. 				   |
+| 404 Not Found   | User not found. 						   |
+| 400 Bad Request | Requisition body must have at least one property to be updated |
+
+
+---
+
+### 1.7. **Atualizar próprio usuário logado**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/users/me`
+
+### Exemplo de Request:
+```
+PATCH /users/me
+Host: **********
+Authorization: token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro   | Tipo        | Descrição                             |
+|-------------|-------------|---------------------------------------|
+| header      | string      | Dado do usuário retirado do jwt(authorization header) |
+
+### Corpo da Requisição:
+```json
+  "name": "Leonardo Moraes de Almeida",
+  "age": 45,
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+  {
+  "id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
+  "name": "Leonardo Moraes de Almeida",
+  "user_name": "leo360",
+  "email": "leonardo@email.com",
+  "age": 45,
+  "gender": "Masculino",
+  "phone": "99123456789",
+  "address":{
+    "zip_code":"12345678",
+    "street": "Rua sete de setembro",
+    "number": 26,
+    "complement": "Prédio",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "country": "Brasil",
+    "created_at": "2022-05-15 16:29:51.350149",
+    "updated_at": "2022-05-15 16:29:51.350149"
+  } 
+  "is_adm": true,
+  "partnership": 1,
+  "created_at": "2022-05-15 16:29:51.350149",
+  "updated_at": "2022-05-25 18:20:21.305144"
+  }
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User cannot access this resource. 				   |
+| 404 Not Found   | User not found. 						   |
+| 400 Bad Request | Requisition body must have at least one property to be updated |
+
+
+---
+
+### 1.8. **Deletar usuário por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/users/:user_id`
+
+### Exemplo de Request:
+```
+DELETE /users/9cda28c9-e540-4b2c-bf0c-c90006d37893
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro   | Tipo        | Descrição                             |
+|-------------|-------------|---------------------------------------|
+| header      | string      | Dado do usuário retirado do jwt(authorization header) |
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+204 OK
+```
+```json
+Vazio
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User cannot access this resource.  |
+| 404 Not Found   | User not found. 		       |
+
+---
+
+### 1.9. **Deletar próprio usuário logado**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/users/me`
+
+### Exemplo de Request:
+```
+DELETE /users/me
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro   | Tipo        | Descrição                             |
+|-------------|-------------|---------------------------------------|
+| user_id     | string      | Identificador único do usuário (User) |
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+204 OK
+```
+```json
+Vazio
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User cannot access this resource.  |
+
+---
+
 ## 2. **Partnerships**
 [ Voltar para os Endpoints ](#5-endpoints)
 

@@ -6,9 +6,10 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from "typeorm";
+import { Partnership } from "./partnership.entity";
 
-@Entity("club")
-export class Club {
+@Entity("rewards")
+export class Reward {
   @PrimaryGeneratedColumn("increment")
   readonly id: number;
 
@@ -24,6 +25,6 @@ export class Club {
   @UpdateDateColumn()
   readonly update_at: Date;
 
-  /*@ManyToOne(type => Partnership, partnership => partnership.reward)
-    partnership: Partnership*/
+  @ManyToOne((type) => Partnership, (partnership) => partnership.rewards)
+  partnership: Partnership;
 }

@@ -6,8 +6,9 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from "typeorm";
+import { User } from "./user.entity";
 
-@Entity()
+@Entity("addresses")
 export class Address {
   @PrimaryGeneratedColumn("increment")
   readonly id: number;
@@ -39,6 +40,6 @@ export class Address {
   @UpdateDateColumn()
   updated_at: Date;
 
-  //   @OneToMany(type => User, user => user.address)
-  //   user: User
+  @OneToMany((type) => User, (user) => user.address)
+  users: User[];
 }

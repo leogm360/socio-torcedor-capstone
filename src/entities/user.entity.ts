@@ -7,10 +7,14 @@ import {
   OneToMany,
   JoinTable,
   ManyToMany,
+  ManyToOne,
 } from "typeorm";
+import { Address } from "./address.entity";
+import { Club } from "./club.entity";
+import { Partnership } from "./partnership.entity";
 import { v4 as uuid } from "uuid";
 
-@Entity("user")
+@Entity("users")
 export class User {
   @PrimaryColumn("uuid")
   readonly id: string;
@@ -36,30 +40,29 @@ export class User {
   @Column()
   phone: number;
 
+  @ManyToOne((type) => Address, (address) => address.users, { eager: true })
+  @JoinTable()
+  address: Address;
+
+  @ManyToOne((type) => Partnership, (partnership) => partnership.users, {
+    eager: true,
+  })
+  @JoinTable()
+  partnership: Partnership;
+
+  @ManyToOne((type) => Club, (club) => club.users, { eager: true })
+  @JoinTable()
+  club: Club;
+
+  // @ManyToMany((type) => Matches, { eager: true })
+  // @JoinTable()
+  // matches: Matches[];
+
   @CreateDateColumn()
   readonly created_at: Date;
 
   @UpdateDateColumn()
   readonly update_at: Date;
-
-  /* @OneToMany((type) => Address, address => address.users, { eager: true })
-  @JoinTable()
-  address: Address;
-
-  @OneToMany((type) => Partnerships, partnerships => partnerships.users, { eager: true })
-  @JoinTable()
-  partnership: Partnerships;
-
-  @OneToMany((type) => Club, club => club.users, { eager: true })
-
- 
-  @JoinTable()
-  club: Club;
-
-  @ManyToMany((type) => Matches, { eager: true })
-  @JoinTable()
-
-  matches: Matches[];*/
 
   constructor() {
     if (!this.id) {

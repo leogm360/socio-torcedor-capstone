@@ -6,9 +6,12 @@ import {
   UpdateDateColumn,
   OneToMany,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
+import { Reward } from "./reward.entity";
+import { User } from "./user.entity";
 
-@Entity("partnership")
+@Entity("partnerships")
 export class Partnership {
   @PrimaryGeneratedColumn("increment")
   readonly id: number;
@@ -19,15 +22,16 @@ export class Partnership {
   @Column({ type: "float" })
   price: number;
 
+  @OneToMany((type) => User, (user) => user.partnership)
+  users: User[];
+
+  @OneToMany((type) => Reward, (reward) => reward.partnership, { eager: true })
+  @JoinColumn()
+  rewards: Reward[];
+
   @CreateDateColumn()
   readonly created_at: Date;
 
   @UpdateDateColumn()
   readonly update_at: Date;
-
-  @OneToMany((type) => User, (user) => user.partnership, { eager: true })
-  user: User[];
-
-  @ManyToOne((type) => Reward, (reward) => reward.partnership, { eager: true })
-  reward: Reward[];
 }

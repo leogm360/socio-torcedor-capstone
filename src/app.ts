@@ -1,7 +1,7 @@
 import express from "express";
 import { Request, Response, NextFunction } from "express";
 
-import { appRoutes } from "./routes";
+import appRoutes from "./routes";
 
 const app = express();
 

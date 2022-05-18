@@ -83,11 +83,11 @@ yarn typeorm migration:run -d src/data-source.ts
     - [POST - /users/login](#12-login-de-usuário)
 	- [GET - /users/](#13-listar-todos-usuários)
 	- [GET - /users/:user_id](#14-listar-usuário-por-id)
-	- [GET - /users/me](#15-listar-próprio-usuário)
+	- [GET - /users/me](#15-listar-próprio-usuário-logado)
 	- [PATCH - /users/:user_id](#16-atualizar-usuário-por-id)
-	- [PATCH - /users/me](#17-atualizar-próprio-usuário)
+	- [PATCH - /users/me](#17-atualizar-próprio-usuário-logado)
 	- [DELETE - /users/:user_id](#18-deletar-usuário-por-id)
-	- [DELETE - /users/me](#19-deletar-próprio-usuário)
+	- [DELETE - /users/me](#19-deletar-próprio-usuário-logado)
 - [Partnerships](#2-partnerships)
 - [Rewards](#3-rewards)
 
@@ -111,7 +111,7 @@ O objeto User é definido como:
 | created_at    | date   | Data de criação do usuário                      |
 | updated_at    | date   | Data de atualização do usuário                  |
 | address_id    | number | Referência ao endereço na tabelas address       |
-| partnership_id| boolean| Referência ao plano na tabelas partnerships     |
+| partnership_id| number | Referência ao plano na tabelas partnerships     |
 
 
 

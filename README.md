@@ -628,7 +628,7 @@ Content-type: application/json
 ### Parâmetros da Requisição:
 | Parâmetro   | Tipo        | Descrição                             |
 |-------------|-------------|---------------------------------------|
-| header      | string      | Dado do usuário retirado do jwt(authorization header) |
+| user_id     | string      | Identificador único do usuário (User) |
 
 ### Corpo da Requisição:
 ```json
@@ -720,13 +720,401 @@ O objeto Partnership é definido como:
 ---
 
 ### 2.1. **Criação de Plano**
-### 2.2. **Listar todos planos**
-### 2.3. **Listar Plano por ID**
-### 2.4. **Listar benefícios de Plano por ID**
-### 2.5. **Atualizar Plano por ID**
-### 2.6. **Deletar Plano por ID**
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/partnerships`
+
+### Exemplo de Request:
+```
+POST /partnerships
+Host: http://suaapi.com/v1**************
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+{
+	"name": "Partner Basic",
+	"price": 80.73,
+	"rewards": [1,2,4] (optional)
+}
+```
+
+### Schema de Validação com Yup:
+```javascript
+
+*****EXEMPLO*****
+name: yup
+        .string()
+	.required()
+	.transform((value, originalValue) => { 
+		return titlelify(originalValue) 
+	}),
+email: yup
+        .string()
+	.email()
+	.required()
+	.transform((value, originalValue) => { 
+		return originalValue.toLowerCase() 
+	}),
+password: yup
+        .string()
+	.required()
+	.transform((value, originalValue) => { 
+		return bcrypt.hashSync(originalValue, 10) 
+	}),
+isAdm: yup
+        .boolean()
+	.required(),
+```
+OBS.: Chaves não presentes no schema serão removidas.
+
+### Exemplo de Response:
+```
+201 Created
+```
+
+```json
+{
+	"id": "1",
+	"name": "Partner Basic",
+	"price": 80.73,
+	"rewards": [
+	  {
+	    "id":1,
+	    "name": "Prioridade Ingresso 3",
+	    "description": "Prioridade na compra de ingressos",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   },
+	   {
+	    "id":2,
+	    "name": "VIP 3",
+	    "description": "VIP 3 com acesso a assentos cobertos",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   },
+	   {
+	    "id":4,
+	    "name": "Acesso Atleta 3",
+	    "description": "Acesso com prioridade 3 aos atletas do club",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   }	   
+	],
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-05-15 16:29:51.350149"	
+}
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 409 Conflict   | Conflict, resource already registered. |
 
 ---
+
+### 2.2. **Listar todos planos**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/partnerships/`
+
+### Exemplo de Request:
+```
+GET /partnerships
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+[
+  {
+  "id": "1",
+	"name": "Partner Basic",
+	"price": 80.73,
+	"rewards": [
+	  {
+	    "id":1,
+	    "name": "Prioridade Ingresso 3",
+	    "description": "Prioridade na compra de ingressos",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   },
+	   {
+	    "id":2,
+	    "name": "VIP 3",
+	    "description": "VIP 3 com acesso a assentos cobertos",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   },
+	   {
+	    "id":4,
+	    "name": "Acesso Atleta 3",
+	    "description": "Acesso com prioridade 3 aos atletas do club",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   }	   
+	],
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-05-15 16:29:51.350149"	
+  }
+]
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User must be an admin to access this resource. |
+
+---
+### 2.3. **Listar Plano por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/partnerships/:partnership_id`
+
+### Exemplo de Request:
+```
+GET /partnerships/1
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro      | Tipo        | Descrição                                  |
+|----------------|-------------|--------------------------------------------|
+| partnership_id | string      | Identificador único do plano (Partnership) |
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+  {
+  	"id": "1",
+	"name": "Partner Basic 2022",
+	"price": 90.73,
+	"rewards": [
+	  {
+	    "id":1,
+	    "name": "Prioridade Ingresso 3",
+	    "description": "Prioridade na compra de ingressos",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   },
+	   {
+	    "id":2,
+	    "name": "VIP 3",
+	    "description": "VIP 3 com acesso a assentos cobertos",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   },
+	   {
+	    "id":4,
+	    "name": "Acesso Atleta 3",
+	    "description": "Acesso com prioridade 3 aos atletas do club",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   }	   
+	],
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-05-15 16:29:51.350149"	
+  }
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User must be an admin to access this resource. |
+| 404 Not Found   | Resource not found. 			   |
+
+---
+### 2.4. **Listar benefícios de Plano por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/partnerships/:partnership_id/rewards`
+
+### Exemplo de Request:
+```
+GET /partnerships/1/rewards
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro      | Tipo        | Descrição                                  |
+|----------------|-------------|--------------------------------------------|
+| partnership_id | string      | Identificador único do plano (Partnership) |
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+  [
+	  {
+	    "id":1,
+	    "name": "Prioridade Ingresso 3",
+	    "description": "Prioridade na compra de ingressos",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   },
+	   {
+	    "id":2,
+	    "name": "VIP 3",
+	    "description": "VIP 3 com acesso a assentos cobertos",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   },
+	   {
+	    "id":4,
+	    "name": "Acesso Atleta 3",
+	    "description": "Acesso com prioridade 3 aos atletas do club",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   }	   
+  ]
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User must be an admin to access this resource. |
+| 404 Not Found   | User not found. |
+
+---
+
+### 2.5. **Atualizar Plano por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/partnerships/:partnership_id`
+
+### Exemplo de Request:
+```
+PATCH /partnerships/1
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro   | Tipo        | Descrição                             |
+|-------------|-------------|---------------------------------------|
+| partnership_id | string   | Identificador único do plano (Partnership) |
+
+
+### Corpo da Requisição:
+```json
+	"name": "Partner Basic 2022",
+	"price": 90.73,
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+  {
+  	"id": "1",
+	"name": "Partner Basic 2022",
+	"price": 90.73,
+	"rewards": [
+	  {
+	    "id":1,
+	    "name": "Prioridade Ingresso 3",
+	    "description": "Prioridade na compra de ingressos",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   },
+	   {
+	    "id":2,
+	    "name": "VIP 3",
+	    "description": "VIP 3 com acesso a assentos cobertos",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   },
+	   {
+	    "id":4,
+	    "name": "Acesso Atleta 3",
+	    "description": "Acesso com prioridade 3 aos atletas do club",
+	    "created_at": "2022-05-15 16:29:51.350149",
+    	    "updated_at": "2022-05-15 16:29:51.350149"
+	   }	   
+	],
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-10-22 18:21:12.205167"	
+  }
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User cannot access this resource. 				   |
+| 404 Not Found   | Resource not found 						   |
+| 400 Bad Request | Requisition body must have at least one property to be updated |
+
+
+---
+### 2.6. **Deletar Plano por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/partnerships/:partnership_id`
+
+### Exemplo de Request:
+```
+DELETE /partnerships/1
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro   | Tipo        | Descrição                             |
+|-------------|-------------|---------------------------------------|
+| header      | string      | Dado do plano retirado do jwt(authorization header) |
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+204 OK
+```
+```json
+Vazio
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User cannot access this resource.  |
+| 404 Not Found   | Resource not found		       |
+
+---
+
 
 ## 3. **Rewards**
 [ Voltar para os Endpoints ](#5-endpoints)

@@ -1118,13 +1118,279 @@ Vazio
 
 ## 3. **Rewards**
 [ Voltar para os Endpoints ](#5-endpoints)
-### 3.1. **Criação de Benefício**
-### 3.2. **Listar todos Benefícios**
-### 3.3. **Listar Benefício por ID**
-### 3.4. **Atualizar Benefício por ID**
-### 3.5. **Deletar Benefício por ID**
+
+O objeto Partnership é definido como:
+
+| Campo         | Tipo   | Descrição                                       |
+| --------------|--------|-------------------------------------------------|
+| id            | string | Identificador único do benefício                |
+| name          | string | O nome do benefício                             |
+| description   | number | A descrição do benefício                        |
+| created_at    | date   | Data de criação do benefício                    |
+| updated_at    | date   | Data de atualização do benefício                |
+
+
+
+### Endpoints
+
+| Método   | Rota          | Descrição                               |
+|----------|---------------|-----------------------------------------|
+| POST     | /rewards 		      | Criação de um benefício                     
+| GET      | /rewards     	      | Lista todos os benefícios                 
+| GET      | /rewards/:reward_id      | Lista um único benefício pelo seu ID
+| PATCH    | /rewards/:reward_id      | Atualiza os dados de um único benefício
+| DELETE   | /rewards/:reward_id      | Deleta um único benefício
 
 ---
+
+### 3.1. **Criação de Benefício**
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/rewards`
+
+### Exemplo de Request:
+```
+POST /rewards
+Host: http://suaapi.com/v1**************
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+{
+	"name": "Desconto Bomboniere 3",
+	"description": "Desconto Bomboniere 3 para compra de gêneros alimentícios durante jogos."
+}
+```
+
+### Schema de Validação com Yup:
+```javascript
+
+*****EXEMPLO*****
+name: yup
+        .string()
+	.required()
+	.transform((value, originalValue) => { 
+		return titlelify(originalValue) 
+	}),
+email: yup
+        .string()
+	.email()
+	.required()
+	.transform((value, originalValue) => { 
+		return originalValue.toLowerCase() 
+	}),
+password: yup
+        .string()
+	.required()
+	.transform((value, originalValue) => { 
+		return bcrypt.hashSync(originalValue, 10) 
+	}),
+isAdm: yup
+        .boolean()
+	.required(),
+```
+OBS.: Chaves não presentes no schema serão removidas.
+
+### Exemplo de Response:
+```
+201 Created
+```
+
+```json
+{
+	"id": "1",
+	"name": "Desconto Bomboniere 3",
+	"description": "Desconto Bomboniere 3 para compra de gêneros alimentícios durante jogos.",
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-05-15 16:29:51.350149"	
+}
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 409 Conflict   | Conflict, resource already registered. |
+
+---
+### 3.2. **Listar todos Benefícios**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/rewards/`
+
+### Exemplo de Request:
+```
+GET /rewards
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+[
+  {
+  	"id": "1",
+	"name": "Desconto Bomboniere 3",
+	"description": "Desconto Bomboniere 3 para compra de gêneros alimentícios durante jogos.",
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-05-15 16:29:51.350149"
+  },
+  {
+  	"id": "2",
+	"name": "Desconto ingressos 50",
+	"description": "Desconto de 50% em ingressos nos jogos no estádio do time.",
+	"created_at": "2022-05-16 15:29:51.350149",
+    	"updated_at": "2022-05-16 15:29:51.350149"
+  }
+]
+```
+
+### Possíveis Erros:
+| Código do Erro  | Descrição |
+|-----------------|-----------|
+| 403 Forbidden   | User must be an admin to access this resource. |
+
+---
+
+### 3.3. **Listar Benefício por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/rewards/:reward_id`
+
+### Exemplo de Request:
+```
+GET /rewards/1
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro      | Tipo        | Descrição                                  |
+|----------------|-------------|--------------------------------------------|
+| rewards_id     | string      | Identificador único do benefício (Reward)  |
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+  {
+  	"id": "1",
+	"name": "Desconto Bomboniere 3",
+	"description": "Desconto Bomboniere 3 para compra de gêneros alimentícios durante jogos.",
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-05-15 16:29:51.350149"
+  }
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User must be an admin to access this resource. |
+| 404 Not Found   | Resource not found. 			   |
+
+---
+### 3.4. **Atualizar Benefício por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/rewards/:reward_id`
+
+### Exemplo de Request:
+```
+PATCH /rewards/1
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro      | Tipo        | Descrição                                  |
+|----------------|-------------|--------------------------------------------|
+| rewards_id     | string      | Identificador único do benefício (Reward)  |
+
+### Corpo da Requisição:
+```json
+	"description": "Desconto Bomboniere 3 para compra de gêneros alimentícios durante jogos e amostra grátis de refrigerante"
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+  {
+	"id": "1",
+	"name": "Desconto Bomboniere 3",
+	"description": "Desconto Bomboniere 3 para compra de gêneros alimentícios durante jogos e amostra grátis de refrigerante"
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-05-15 16:29:51.350149"
+  }
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User cannot access this resource. 				   |
+| 404 Not Found   | Resource not found 						   |
+| 400 Bad Request | Requisition body must have at least one property to be updated |
+
+
+---
+
+### 3.5. **Deletar Benefício por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/rewards/:reward_id`
+
+### Exemplo de Request:
+```
+DELETE /rewards/1
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro   | Tipo        | Descrição                             |
+|-------------|-------------|---------------------------------------|
+| rewards_id  | string      | Identificador único do benefício (Reward)  |
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+204 OK
+```
+```json
+Vazio
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User cannot access this resource.  |
+| 404 Not Found   | Resource not found		       |
+
+---
+
 
 ## 6. Testes
 [ Voltar para o topo ](#tabela-de-conteúdos)

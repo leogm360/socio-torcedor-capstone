@@ -108,8 +108,8 @@ yarn typeorm migration:run -d src/data-source.ts
  	- [POST - /clubs](#31-criação-de-clube)
 	- [GET - /clubs/](#32-listar-todos-clubes)
 	- [GET - /clubs/:reward_id](#33-listar-clube-por-id)
-	- [PATCH - /clubs/:clubss_id](#34-atualizar-clube-por-id)
-	- [DELETE - /clubs/:clubss_id](#35-deletar-clube-por-id) 
+	- [PATCH - /clubs/:club_id](#34-atualizar-clube-por-id)
+	- [DELETE - /clubs/:club_id](#35-deletar-clube-por-id) 
 
 ---
 

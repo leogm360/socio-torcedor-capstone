@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import AppError from "../../errors";
+import partnershipListOneService from "../../services/partnerships/listOne.service";
 
 const partnershipListOneController = async (req: Request, res: Response) => {
   try {
@@ -14,3 +15,5 @@ const partnershipListOneController = async (req: Request, res: Response) => {
     }
   }
 };
+
+export default partnershipListOneController;

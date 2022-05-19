@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import AppError from "../../errors";
+import partnershipCreateService from "../../services/partnerships/create.service";
 
 const partnershipCreateController = async (req: Request, res: Response) => {
   try {
     const { name, price } = req.body;
 
-    const partnership = await parnerchipCreateService({ name, price });
+    const partnership = await partnershipCreateService({ name, price });
 
     return res.status(201).json(partnership);
   } catch (err) {
@@ -14,3 +15,5 @@ const partnershipCreateController = async (req: Request, res: Response) => {
     }
   }
 };
+
+export default partnershipCreateController;

@@ -12,13 +12,11 @@ const clubUpdateOneService = async ({ club_id, name }: IClubUpdate) => {
 
   if (!club) throw errNotFound;
 
-  const ClubAlreadyExists = await clubs.findOneBy({
+  const clubAlreadyExists = await clubs.findOneBy({
     name: name,
   });
 
-  console.log(ClubAlreadyExists);
-
-  if (ClubAlreadyExists) throw errConflict;
+  if (clubAlreadyExists) throw errConflict;
 
   await clubs.update(club!.id, { name: name });
 

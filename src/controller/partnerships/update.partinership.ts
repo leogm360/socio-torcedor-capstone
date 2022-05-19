@@ -4,17 +4,17 @@ import partnershipUpdateOneService from "../../services/partnerships/updateOne.s
 
 const partnershipUpdateController = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const { name, price, reward_id } = req.body;
+    const { partnership_id } = req.params;
+    const { name, price, rewards_id } = req.body;
 
     const partnership = await partnershipUpdateOneService({
-      id,
+      partnership_id,
       name,
       price,
-      reward_id,
+      rewards_id,
     });
 
-    return res.status(201).json(partnership);
+    return res.status(201).send(partnership);
   } catch (err: any) {
     const { statusCode, message } = err;
 

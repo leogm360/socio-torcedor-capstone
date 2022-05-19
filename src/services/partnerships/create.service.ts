@@ -11,7 +11,7 @@ const partnershipCreateService = async ({
   rewards_id,
 }: ICreatePartnership) => {
   const { partnerships, rewards } = useRepo();
-  const { errConflict } = useError();
+  const { errConflict, errNotFound } = useError();
 
   const partnershipAlreadyExists = await partnerships.findOneBy({ name: name });
 
@@ -20,6 +20,7 @@ const partnershipCreateService = async ({
   let listRewards: Reward[] = [];
   if (rewards_id !== undefined) {
     listRewards = await rewards.find({ where: { id: In(rewards_id) } });
+    if (listRewards.length !== rewards_id.length) throw errNotFound;
   }
 
   const newPartnership = new Partnership();

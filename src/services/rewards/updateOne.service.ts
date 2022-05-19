@@ -21,6 +21,7 @@ const rewardUpdateOneService = async ({
   const RewardAlreadyExists = await rewards.findOneBy({
     name: name,
   });
+
   if (RewardAlreadyExists && name !== reward.name && name !== undefined)
     throw errConflict;
 

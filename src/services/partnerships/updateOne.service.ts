@@ -5,40 +5,49 @@ import useRepo from "../../hooks/useRepo";
 import { IUpdatePartnership } from "../../interfaces/partnership/index";
 
 const partnershipUpdateOneService = async ({
-  id,
+  partnership_id,
   name,
   price,
-  reward_id = undefined,
+  rewards_id,
 }: IUpdatePartnership) => {
   const { partnerships, rewards } = useRepo();
-  const { errNotFound } = useError();
+  const { errNotFound, errConflict } = useError();
 
-  const ListPartnerships = await partnerships.find();
+  const listPartnerships = await partnerships.find();
 
-  const account = ListPartnerships.find(
-    (partnership) => partnership.id.toString() === id
+  const partnership = listPartnerships.find(
+    (partnership) => partnership.id.toString() === partnership_id
   );
 
-  if (!account) throw errNotFound;
+  if (!partnership) throw errNotFound;
 
-  let listRewards: Reward[] = reward_id ? reward_id : account.rewards;
-  if (reward_id !== undefined) {
-    listRewards = await rewards.find({ where: { id: In(reward_id) } });
+  let listRewards: Reward[] = partnership.rewards;
+  if (rewards_id !== undefined) {
+    listRewards = await rewards.find({ where: { id: In(rewards_id) } });
+    if (listRewards.length !== rewards_id.length) throw errNotFound;
   }
 
-  if (!listRewards) throw errNotFound;
-
-  const newName = name ? name : account?.name;
-  const newPrice = price ? price : account?.price;
-  const newRewards = reward_id ? reward_id : account?.rewards;
-
-  await partnerships.update(account!.id, {
-    name: newName,
-    price: newPrice,
-    rewards: newRewards,
+  const partnershipAlreadyExists = await partnerships.findOneBy({
+    name: name,
   });
 
-  return true;
+  if (
+    partnershipAlreadyExists &&
+    name !== partnership.name &&
+    name !== undefined
+  )
+    throw errConflict;
+
+  partnership.name = name ? name : partnership.name;
+  partnership.price = price ? price : partnership.price;
+
+  await partnerships.update(partnership!.id, {
+    name: partnership.name,
+    price: partnership.price,
+    rewards: listRewards,
+  });
+
+  return partnership;
 };
 
 export default partnershipUpdateOneService;

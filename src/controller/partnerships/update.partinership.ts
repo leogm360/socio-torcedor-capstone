@@ -1,24 +1,28 @@
 import { Request, Response } from "express";
-import AppError from "../../errors";
+
 import partnershipUpdateOneService from "../../services/partnerships/updateOne.service";
 
 const partnershipUpdateController = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const { name, price, reward_id } = req.body;
+    const { partnership_id } = req.params;
+    const { name, price, rewards_id } = req.body;
 
     const partnership = await partnershipUpdateOneService({
-      id,
+      partnership_id,
       name,
       price,
-      reward_id,
+      rewards_id,
     });
 
-    return res.status(201).json(partnership);
-  } catch (err) {
-    if (err instanceof AppError) {
-      return new AppError(400, "");
-    }
+    return res.status(201).send(partnership);
+  } catch (err: any) {
+    const { statusCode, message } = err;
+
+    return res.status(statusCode).send({
+      status: "err",
+      statusCode,
+      message,
+    });
   }
 };
 

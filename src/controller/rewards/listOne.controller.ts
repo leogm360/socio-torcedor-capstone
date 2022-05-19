@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
-import "express-async-errors";
 
 import rewardListOneService from "../../services/rewards/listOne.service";
 
 export const rewardListOneController = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { reward_id } = req.params;
 
   try {
-    const reward = await rewardListOneService(id);
+    const reward = await rewardListOneService(reward_id);
 
     return res.status(200).json(reward);
   } catch (err: any) {

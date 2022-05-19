@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import "express-async-errors";
 
-import rewardUpdateOneService from "../../services/club/updateOne.service";
+import rewardUpdateOneService from "../../services/rewards/updateOne.service";
 
 const rewardUpdateOneController = async (req: Request, res: Response) => {
   try {
@@ -14,7 +13,7 @@ const rewardUpdateOneController = async (req: Request, res: Response) => {
       description,
     });
 
-    return res.status(201).json(reward);
+    return res.status(201).send(reward);
   } catch (err: any) {
     const { statusCode, message } = err;
 

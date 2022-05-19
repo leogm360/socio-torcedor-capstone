@@ -1,12 +1,12 @@
 export interface ICreatePartnership {
   name: string;
   price: number;
-  reward_id?: [];
+  rewards_id: [];
 }
 
 export interface IUpdatePartnership {
-  id: string;
+  partnership_id: string;
   name: string;
   price: number;
-  reward_id?: [];
+  rewards_id: [];
 }

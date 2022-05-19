@@ -9,11 +9,11 @@ const routes = Router();
 
 const partnershipsRoutes = () => {
   routes.post("/", partnershipCreateController);
-  routes.post("/:partnerships_id/:rewards_id");
+  routes.post("/:partnership_id/:reward_id");
   routes.get("/", partinershipListController);
-  routes.get("/:partnerships_id", partnershipListOneController);
-  routes.patch("/:partnerships_id", partnershipUpdateController);
-  routes.delete("/:partnerships_id", partnershipDeleteController);
+  routes.get("/:partnership_id", partnershipListOneController);
+  routes.patch("/:partnership_id", partnershipUpdateController);
+  routes.delete("/:partnership_id", partnershipDeleteController);
 
   return routes;
 };

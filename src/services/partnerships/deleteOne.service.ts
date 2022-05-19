@@ -1,19 +1,19 @@
 import useRepo from "../../hooks/useRepo";
 import useError from "../../hooks/useError";
 
-const partnershipDeleteOneService = async (id: string) => {
+const partnershipDeleteOneService = async (partnership_id: String) => {
   const { partnerships } = useRepo();
   const { errNotFound } = useError();
 
   const listPartnerships = await partnerships.find();
 
-  const account = listPartnerships.find(
-    (partnership) => partnership.id.toString() === id
+  const partnership = listPartnerships.find(
+    (partnership) => partnership.id.toString() === partnership_id
   );
 
-  if (!account) throw errNotFound;
+  if (!partnership) throw errNotFound;
 
-  await partnerships.delete(account!.id);
+  await partnerships.delete(partnership!.id);
 
   return true;
 };

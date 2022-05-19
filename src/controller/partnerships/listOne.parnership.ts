@@ -4,15 +4,19 @@ import partnershipListOneService from "../../services/partnerships/listOne.servi
 
 const partnershipListOneController = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { partnership_id } = req.params;
 
-    const partnership = await partnershipListOneService(id);
+    const partnership = await partnershipListOneService(partnership_id);
 
     return res.status(201).json(partnership);
-  } catch (err) {
-    if (err instanceof AppError) {
-      return new AppError(401, "");
-    }
+  } catch (err: any) {
+    const { statusCode, message } = err;
+
+    return res.status(statusCode).send({
+      status: "err",
+      statusCode,
+      message,
+    });
   }
 };
 

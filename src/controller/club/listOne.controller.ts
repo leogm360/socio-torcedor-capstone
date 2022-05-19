@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import "express-async-errors";
 
 import clubListOneService from "../../services/club/listOne.service";
 

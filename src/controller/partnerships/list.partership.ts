@@ -7,10 +7,14 @@ const partinershipListController = async (req: Request, res: Response) => {
     const partnership = await partinershipsListService();
 
     return res.json(partnership);
-  } catch (err) {
-    if (err instanceof AppError) {
-      return new AppError(400, "");
-    }
+  } catch (err: any) {
+    const { statusCode, message } = err;
+
+    return res.status(statusCode).send({
+      status: "err",
+      statusCode,
+      message,
+    });
   }
 };
 

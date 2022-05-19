@@ -8,29 +8,30 @@ import { ICreatePartnership } from "../../interfaces/partnership/index";
 const partnershipCreateService = async ({
   name,
   price,
-  reward_id,
+  rewards_id,
 }: ICreatePartnership) => {
   const { partnerships, rewards } = useRepo();
-  const { errConflict } = useError();
+  const { errConflict, errNotFound } = useError();
 
   const partnershipAlreadyExists = await partnerships.findOneBy({ name: name });
 
   if (partnershipAlreadyExists) throw errConflict;
 
   let listRewards: Reward[] = [];
-  if (reward_id !== undefined) {
-    listRewards = await rewards.find({ where: { id: In(reward_id) } });
+  if (rewards_id !== undefined) {
+    listRewards = await rewards.find({ where: { id: In(rewards_id) } });
+    if (listRewards.length !== rewards_id.length) throw errNotFound;
   }
 
-  const partnership = new Partnership();
-  partnership.name = name;
-  partnership.price = price;
-  partnership.rewards = listRewards;
+  const newPartnership = new Partnership();
+  newPartnership.name = name;
+  newPartnership.price = price;
+  newPartnership.rewards = listRewards;
 
-  partnerships.create(partnership);
-  partnerships.save(partnership);
+  partnerships.create(newPartnership);
+  await partnerships.save(newPartnership);
 
-  return partnership;
+  return newPartnership;
 };
 
 export default partnershipCreateService;

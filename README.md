@@ -1092,7 +1092,7 @@ Content-type: application/json
 ### Parâmetros da Requisição:
 | Parâmetro   | Tipo        | Descrição                             |
 |-------------|-------------|---------------------------------------|
-| header      | string      | Dado do plano retirado do jwt(authorization header) |
+| partnership_id | string   | Identificador único do plano (Partnership) |
 
 ### Corpo da Requisição:
 ```json

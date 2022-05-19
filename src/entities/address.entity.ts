@@ -34,12 +34,12 @@ export class Address {
   @Column()
   country: string;
 
+  @OneToMany((type) => User, (user) => user.address)
+  users: User[];
+
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  @OneToMany((type) => User, (user) => user.address)
-  users: User[];
 }

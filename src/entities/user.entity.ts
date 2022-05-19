@@ -4,15 +4,15 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
-  JoinTable,
   ManyToMany,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { Address } from "./address.entity";
 import { Club } from "./club.entity";
 import { Partnership } from "./partnership.entity";
 import { v4 as uuid } from "uuid";
+import { boolean } from "yup";
 
 @Entity("users")
 export class User {
@@ -28,7 +28,7 @@ export class User {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Column()
@@ -38,25 +38,31 @@ export class User {
   gender: string;
 
   @Column()
-  phone: number;
+  phone: string;
 
-  @ManyToOne((type) => Address, (address) => address.users, { eager: true })
-  @JoinTable()
+  @ManyToOne((type) => Address, (address) => address.users, {
+    eager: true,
+    cascade: ["insert", "update", "remove"],
+  })
+  @JoinColumn()
   address: Address;
 
   @ManyToOne((type) => Partnership, (partnership) => partnership.users, {
     eager: true,
   })
-  @JoinTable()
+  @JoinColumn()
   partnership: Partnership;
 
   @ManyToOne((type) => Club, (club) => club.users, { eager: true })
-  @JoinTable()
+  @JoinColumn()
   club: Club;
 
   // @ManyToMany((type) => Matches, { eager: true })
   // @JoinTable()
   // matches: Matches[];
+
+  @Column()
+  is_adm: boolean;
 
   @CreateDateColumn()
   readonly created_at: Date;

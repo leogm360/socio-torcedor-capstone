@@ -5,8 +5,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  JoinColumn,
   ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { Reward } from "./reward.entity";
 import { User } from "./user.entity";
@@ -26,7 +26,7 @@ export class Partnership {
   users: User[];
 
   @ManyToMany((type) => Reward, { eager: true })
-  @JoinColumn()
+  @JoinTable()
   rewards: Reward[];
 
   @CreateDateColumn()

@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import AppError from "../../errors";
+import partinershipsListService from "../../services/partnerships/list.service";
 
 const partinershipListController = async (req: Request, res: Response) => {
   try {
-    const partnership = await partnershipListService();
+    const partnership = await partinershipsListService();
 
     return res.json(partnership);
   } catch (err) {
@@ -12,3 +13,5 @@ const partinershipListController = async (req: Request, res: Response) => {
     }
   }
 };
+
+export default partinershipListController;

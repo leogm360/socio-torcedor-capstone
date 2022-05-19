@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import AppError from "../../errors";
+import partnershipDeleteOneService from "../../services/partnerships/deleteOne.service";
 
 const partnershipDeleteController = async (req: Request, res: Response) => {
   try {
-    const id = req.params;
+    const { id } = req.params;
 
-    const partnership = await partnershipDeleteService(id);
+    const partnership = await partnershipDeleteOneService(id);
 
     return res
       .status(200)
@@ -16,3 +17,5 @@ const partnershipDeleteController = async (req: Request, res: Response) => {
     }
   }
 };
+
+export default partnershipDeleteController;

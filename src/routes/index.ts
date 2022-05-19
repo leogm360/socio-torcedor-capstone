@@ -5,10 +5,10 @@ import rewardsRoutes from "./rewards.routes";
 import userRoutes from "./user.routes";
 
 const appRoutes = (app: Express) => {
-  app.use("/users", userRoutes);
-  app.use("/rewards", rewardsRoutes);
-  app.use("/partnerships", partnershipsRoutes);
-  app.use("/clubs", clubRoutes);
+  app.use("/users", userRoutes());
+  app.use("/rewards", rewardsRoutes());
+  app.use("/partnerships", partnershipsRoutes());
+  app.use("/clubs", clubRoutes());
 };
 
 export default appRoutes;

@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import "express-async-errors";
 
 import clubDeleteOneService from "../../services/club/deleteOne.service";
 
@@ -9,7 +8,7 @@ const clubDeleteOneController = async (req: Request, res: Response) => {
 
     const club = await clubDeleteOneService(club_id);
 
-    return res.status(204);
+    return res.status(204).send({});
   } catch (err: any) {
     const { statusCode, message } = err;
 

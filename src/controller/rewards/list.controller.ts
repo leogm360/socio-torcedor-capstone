@@ -1,14 +1,20 @@
 import { Request, Response } from "express";
-import AppError from "../../errors";
+import "express-async-errors";
 
-export const listRewardsController = async (req: Request, res: Response) => {
+import rewardListService from "../../services/rewards/list.service";
+
+export const rewardListController = async (req: Request, res: Response) => {
   try {
-    const rewards = await listRewardsService();
+    const rewards = await rewardListService();
 
     return res.status(200).json(rewards);
-  } catch (err) {
-    if (err instanceof AppError) {
-      return new AppError(400, "");
-    }
+  } catch (err: any) {
+    const { statusCode, message } = err;
+
+    return res.status(statusCode).send({
+      status: "err",
+      statusCode,
+      message,
+    });
   }
 };

@@ -8,7 +8,7 @@ const appRoutes = (app: Express) => {
   app.use("/users", userRoutes);
   app.use("/rewards", rewardsRoutes);
   app.use("/partnerships", partnershipsRoutes);
-  app.use("/partnerships", clubRoutes);
+  app.use("/clubs", clubRoutes);
 };
 
 export default appRoutes;

@@ -6,8 +6,9 @@ import clubUpdateOneService from "../../services/club/updateOne.service";
 const clubUpdateController = async (req: Request, res: Response) => {
   try {
     const { name } = req.body;
+    const { club_id } = req.params;
 
-    const club = await clubUpdateOneService(name);
+    const club = await clubUpdateOneService(club_id, name);
 
     return res.status(201).send(club);
   } catch (err: any) {
@@ -20,3 +21,5 @@ const clubUpdateController = async (req: Request, res: Response) => {
     });
   }
 };
+
+export default clubUpdateController;

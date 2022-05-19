@@ -1,19 +1,25 @@
 import { Request, Response } from "express";
-import AppError from "../../errors";
+import "express-async-errors";
 
-export const deleteOneRewardController = async (
+import rewardDeleteOneService from "../../services/rewards/deleteOne.service";
+
+export const rewardDeleteOneController = async (
   req: Request,
   res: Response
 ) => {
-  const { id } = req.params;
-
   try {
-    const reward = await deleteOneRewardService(id);
+    const { reward_id } = req.params;
 
-    return res.status(204).json(reward);
-  } catch (err) {
-    if (err instanceof AppError) {
-      return new AppError(400, "");
-    }
+    const reward = await rewardDeleteOneService(reward_id);
+
+    return res.status(204);
+  } catch (err: any) {
+    const { statusCode, message } = err;
+
+    return res.status(statusCode).send({
+      status: "err",
+      statusCode,
+      message,
+    });
   }
 };

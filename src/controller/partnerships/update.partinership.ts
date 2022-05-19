@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import AppError from "../../errors";
+
 import partnershipUpdateOneService from "../../services/partnerships/updateOne.service";
 
 const partnershipUpdateController = async (req: Request, res: Response) => {
@@ -15,10 +15,14 @@ const partnershipUpdateController = async (req: Request, res: Response) => {
     });
 
     return res.status(201).json(partnership);
-  } catch (err) {
-    if (err instanceof AppError) {
-      return new AppError(400, "");
-    }
+  } catch (err: any) {
+    const { statusCode, message } = err;
+
+    return res.status(statusCode).send({
+      status: "err",
+      statusCode,
+      message,
+    });
   }
 };
 

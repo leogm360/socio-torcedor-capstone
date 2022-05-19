@@ -9,6 +9,8 @@ export const AppDataSource =
         database: ":memory:",
         entities: ["src/entities/*.ts"],
         synchronize: true,
+        dropSchema: true,
+        logging: false,
       })
     : new DataSource({
         type: "postgres",

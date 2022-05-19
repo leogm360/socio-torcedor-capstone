@@ -1,6 +1,11 @@
 import useRepo from "../../hooks/useRepo";
 import useError from "../../hooks/useError";
+import { IRewardUpdate } from "../../interfaces/rewards";
 
-const clubUpdateOneService = async (name: String) => {};
+const rewardUpdateOneService = async ({
+  id,
+  name,
+  description,
+}: IRewardUpdate) => {};
 
-export default clubUpdateOneService;
+export default rewardUpdateOneService;

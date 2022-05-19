@@ -20,3 +20,5 @@ const clubDeleteOneController = async (req: Request, res: Response) => {
     });
   }
 };
+
+export default clubDeleteOneController;

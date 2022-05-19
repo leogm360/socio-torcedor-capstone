@@ -667,7 +667,7 @@ Content-type: application/json
 ### Parâmetros da Requisição:
 | Parâmetro   | Tipo        | Descrição                             |
 |-------------|-------------|---------------------------------------|
-| user_id     | string      | Identificador único do usuário (User) |
+| header      | string      | Dado do usuário retirado do jwt(authorization header) |
 
 ### Corpo da Requisição:
 ```json

@@ -104,6 +104,13 @@ yarn typeorm migration:run -d src/data-source.ts
 	- [PATCH - /rewards/:reward_id](#34-atualizar-benefício-por-id)
 	- [DELETE - /rewards/:reward_id](#35-deletar-benefício-por-id) 
 
+- [Clubs](#4-clubs)
+ 	- [POST - /clubs](#31-criação-de-clube)
+	- [GET - /clubs/](#32-listar-todos-clubes)
+	- [GET - /clubs/:reward_id](#33-listar-clube-por-id)
+	- [PATCH - /clubs/:clubss_id](#34-atualizar-clube-por-id)
+	- [DELETE - /clubs/:clubss_id](#35-deletar-clube-por-id) 
+
 ---
 
 ## 1. **Users**
@@ -696,7 +703,7 @@ O objeto Partnership é definido como:
 
 | Campo         | Tipo   | Descrição                                       |
 | --------------|--------|-------------------------------------------------|
-| id            | string | Identificador único do plano                    |
+| id            | number | Identificador único do plano                    |
 | name          | string | O nome do plano                                 |
 | price         | number | O preço do plano                                |
 | created_at    | date   | Data de criação do plano                        |
@@ -728,7 +735,7 @@ O objeto Partnership é definido como:
 ```
 POST /partnerships
 Host: http://suaapi.com/v1**************
-Authorization: None
+Authorization: token, isAdm
 Content-type: application/json
 ```
 
@@ -1119,11 +1126,11 @@ Vazio
 ## 3. **Rewards**
 [ Voltar para os Endpoints ](#5-endpoints)
 
-O objeto Partnership é definido como:
+O objeto Reward é definido como:
 
 | Campo         | Tipo   | Descrição                                       |
 | --------------|--------|-------------------------------------------------|
-| id            | string | Identificador único do benefício                |
+| id            | number | Identificador único do benefício                |
 | name          | string | O nome do benefício                             |
 | description   | number | A descrição do benefício                        |
 | created_at    | date   | Data de criação do benefício                    |
@@ -1152,7 +1159,7 @@ O objeto Partnership é definido como:
 ```
 POST /rewards
 Host: http://suaapi.com/v1**************
-Authorization: None
+Authorization: token, isAdm
 Content-type: application/json
 ```
 
@@ -1338,7 +1345,7 @@ Content-type: application/json
 	"name": "Desconto Bomboniere 3",
 	"description": "Desconto Bomboniere 3 para compra de gêneros alimentícios durante jogos e amostra grátis de refrigerante"
 	"created_at": "2022-05-15 16:29:51.350149",
-    	"updated_at": "2022-05-15 16:29:51.350149"
+    	"updated_at": "2022-10-22 18:21:12.205167"
   }
 ```
 
@@ -1369,6 +1376,278 @@ Content-type: application/json
 | Parâmetro   | Tipo        | Descrição                             |
 |-------------|-------------|---------------------------------------|
 | rewards_id  | string      | Identificador único do benefício (Reward)  |
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+204 OK
+```
+```json
+Vazio
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User cannot access this resource.  |
+| 404 Not Found   | Resource not found		       |
+
+---
+
+## 4. **Clubs**
+[ Voltar para os Endpoints ](#5-endpoints)
+
+O objeto Club é definido como:
+
+| Campo         | Tipo   | Descrição                        |
+| --------------|--------|----------------------------------|
+| id            | number | Identificador único do clube     |
+| name          | string | O nome do clube                  |
+| created_at    | date   | Data de criação do clube         |
+| updated_at    | date   | Data de atualização do clube     |
+
+
+
+### Endpoints
+
+| Método   | Rota       | Descrição                               |
+|----------|------------|-----------------------------------------|
+| POST     | /clubs      	 | Criação de um clube            |
+| GET      | /clubs      	 | Lista todos os clubes          |
+| GET      | /clubs/:club_id     | Lista um único clube pelo seu ID
+| PATCH    | /clubs/:club_id     | Atualiza os dados de um único clube
+| DELETE   | /clubs/:club_id     | Deleta um único clube
+
+
+---
+
+### 4.1. **Criação de Clube**
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/clubs`
+
+### Exemplo de Request:
+```
+POST /clubs
+Host: http://suaapi.com/v1**************
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+{
+	"name": "Monte Alegre FC",
+}
+```
+
+### Schema de Validação com Yup:
+```javascript
+
+*****EXEMPLO*****
+name: yup
+        .string()
+	.required()
+	.transform((value, originalValue) => { 
+		return titlelify(originalValue) 
+	}),
+email: yup
+        .string()
+	.email()
+	.required()
+	.transform((value, originalValue) => { 
+		return originalValue.toLowerCase() 
+	}),
+password: yup
+        .string()
+	.required()
+	.transform((value, originalValue) => { 
+		return bcrypt.hashSync(originalValue, 10) 
+	}),
+isAdm: yup
+        .boolean()
+	.required(),
+```
+OBS.: Chaves não presentes no schema serão removidas.
+
+### Exemplo de Response:
+```
+201 Created
+```
+
+```json
+{
+	"id": "1",
+	"name": "Monte Alegre FC",
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-05-15 16:29:51.350149"	
+}
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 409 Conflict   | Conflict, resource already registered. |
+| 403 Forbidden  | User must be an admin to access this resource. |
+
+---
+
+### 4.2. **Listar todos Clubes**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/clubs/`
+
+### Exemplo de Request:
+```
+GET /clubs
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+[
+  {
+  	"id": "1",
+	"name": "Monte Alegre FC",
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-05-15 16:29:51.350149"
+  },
+  {
+  	"id": "2",
+	"name": "Campo Limpo Esporte Clube",
+	"created_at": "2022-05-16 15:29:51.350149",
+    	"updated_at": "2022-05-16 15:29:51.350149"
+  }
+]
+```
+
+### Possíveis Erros:
+| Código do Erro  | Descrição |
+|-----------------|-----------|
+| 403 Forbidden   | User must be an admin to access this resource. |
+
+---
+
+### 4.3. **Listar Clube por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/clubs/:club_id`
+
+### Exemplo de Request:
+```
+GET /clubs/1
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro      | Tipo        | Descrição                            |
+|----------------|-------------|--------------------------------------|
+| clubs_id       | string      | Identificador único do clube (Club)  |
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+  {
+  	"id": "1",
+	"name": "Monte Alegre FC",
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-05-15 16:29:51.350149"
+  }
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User must be an admin to access this resource. |
+| 404 Not Found   | Resource not found. 			   |
+
+---
+
+### 4.4. **Atualizar Clube por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/clubs/:club_id`
+
+### Exemplo de Request:
+```
+PATCH /clubs/1
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro      | Tipo        | Descrição                            |
+|----------------|-------------|--------------------------------------|
+| clubs_id       | string      | Identificador único do clube (Club)  |
+
+
+### Corpo da Requisição:
+```json
+	"name": "Monte Alegre Futebol Clube"
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+  {
+	"id": "1",
+	"name": "Monte Alegre Futebol Clube",
+	"created_at": "2022-05-15 16:29:51.350149",
+    	"updated_at": "2022-05-15 16:29:51.350149"
+  }
+```
+
+### Possíveis Erros:
+| Código do Erro | Descrição |
+|----------------|-----------|
+| 403 Forbidden   | User cannot access this resource 				   |
+| 404 Not Found   | Resource not found 						   |
+| 400 Bad Request | Requisition body must have at least one property to be updated |
+
+
+---
+### 4.5. **Deletar Clube por ID**
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/clubs/:club_id`
+
+### Exemplo de Request:
+```
+DELETE /clubs/1
+Host: **********
+Authorization: token, isAdm
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro   | Tipo        | Descrição                             |
+|-------------|-------------|---------------------------------------|
+| clubs_id    | string      | Identificador único do clube (Club)  |
 
 ### Corpo da Requisição:
 ```json

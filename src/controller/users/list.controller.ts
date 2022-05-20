@@ -1,12 +1,12 @@
-import { Request, Response } from "express";
+// import { Request, Response } from "express";
 
-export const listController = async (req: Request, res: Response) => {
-  try {
-    const users = await usersListService();
+// export const listController = async (req: Request, res: Response) => {
+//   try {
+//     const users = await usersListService();
 
-    return res.status(200).json(users);
-  } catch (err: any) {
-    const { statusCode, message } = err;
-    return res.status(statusCode).send({ status: "err", statusCode, message });
-  }
-};
+//     return res.status(200).json(users);
+//   } catch (err: any) {
+//     const { statusCode, message } = err;
+//     return res.status(statusCode).send({ status: "err", statusCode, message });
+//   }
+// };

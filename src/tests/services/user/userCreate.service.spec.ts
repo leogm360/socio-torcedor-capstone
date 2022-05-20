@@ -7,7 +7,7 @@ import useError from "../../../hooks/useError";
 describe("Unitary Create User Service on Success", () => {
   let connection: DataSource;
 
-  const { addresses, clubs, partnerships } = useRepo();
+  const { clubs, partnerships } = useRepo();
 
   const address = {
     zip_code: "59152280",
@@ -125,7 +125,7 @@ describe("Unitary Create User Service on Success", () => {
 describe("Unitary Create User Service on Fail", () => {
   let connection: DataSource;
 
-  const { addresses, clubs, partnerships } = useRepo();
+  const { clubs, partnerships } = useRepo();
   const { errNotFound, errConflict } = useError();
 
   const address = {

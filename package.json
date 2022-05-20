@@ -11,7 +11,8 @@
     "jest:test": "NODE_ENV=test jest",
     "jest:watch": "NODE_ENV=test jest --watch",
     "typeorm": "typeorm-ts-node-commonjs",
-    "migrations": "chmod +x ./src/scripts/*.sh && ./src/scripts/typeorm-migrations.sh"
+    "migrations": "chmod +x ./src/scripts/*.sh && ./src/scripts/typeorm-migrations.sh",
+    "postgres:create": "chmod +x ./src/scripts/*.sh && ./src/scripts/postgres-user.sh"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

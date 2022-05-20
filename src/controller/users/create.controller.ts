@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
-import AppError from "../../errors";
+import createUserService from "../../services/users/create.service";
 
 export const createUserController = async (req: Request, res: Response) => {
   const {
     name,
-    userName,
+    user_name,
     email,
     password,
     age,
     phone,
     gender,
-    isAdm = false,
-    address_id,
+    is_adm = false,
+    address,
     partnership_id,
     club_id,
   } = req.body;
@@ -19,16 +19,16 @@ export const createUserController = async (req: Request, res: Response) => {
   try {
     const user = await createUserService({
       name,
-      userName,
+      user_name,
       email,
       password,
       age,
-      phone,
       gender,
-      isAdm,
-      address_id,
-      partnership_id,
+      phone,
+      address,
       club_id,
+      partnership_id,
+      is_adm,
     });
 
     return res.status(201).json(user);

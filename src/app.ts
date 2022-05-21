@@ -1,6 +1,5 @@
 import express from "express";
-import { Request, Response, NextFunction } from "express";
-import AppError from "./errors";
+import errorHandler from "./middlewares/errorHandler.middleware";
 
 import appRoutes from "./routes";
 
@@ -10,17 +9,6 @@ app.use(express.json());
 
 appRoutes(app);
 
-app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
-  if (err instanceof AppError) {
-    return res.status(err.statusCode).json();
-  }
-
-  console.error(err);
-
-  return res.status(500).json({
-    status: "error",
-    message: "Internal server error",
-  });
-});
+app.use(errorHandler);
 
 export default app;

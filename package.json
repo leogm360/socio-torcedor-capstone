@@ -6,7 +6,7 @@
   "author": "paulohliima <paulo.lima-16@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "tsnode:start": "ts-node .",
+    "tsnode:start": "ts-node --files .",
     "tsnode:dev": "ts-node-dev --transpile-only --watch --ignore-watch node-modules .",
     "jest:test": "NODE_ENV=test jest",
     "jest:watch": "NODE_ENV=test jest --watch",

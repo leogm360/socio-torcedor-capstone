@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import editMeUserService from "../../services/users/editMe.service";
 
 const editMeUserController = async (req: Request, res: Response) => {
-  const { userEmail, toUpdate } = req;
+  const { userEmail, toEdit } = req;
 
-  const user = await editMeUserService({ userEmail, toUpdate });
+  const user = await editMeUserService({ userEmail, toEdit });
 
   return res.status(201).json(user);
 };

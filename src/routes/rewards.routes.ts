@@ -20,10 +20,10 @@ const rewardsRoutes = () => {
     expressYupMiddleware({ schemaValidator: createRewardSchema }),
     createRewardController
   );
-  routes.get("/", createRewardController);
-  routes.get("/:reward_id", rewardListOneController);
-  routes.patch("/:reward_id", rewardUpdateOneController);
-  routes.delete("/:reward_id", rewardDeleteOneController);
+  routes.get("/", listRewardsController);
+  routes.get("/:reward_id", listOneRewardController);
+  routes.patch("/:reward_id", editOneRewardController);
+  routes.delete("/:reward_id", deleteOneRewardController);
 
   return routes;
 };

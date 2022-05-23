@@ -4,10 +4,10 @@ import editOneUserService from "../../services/users/editOne.service";
 const editOneUserController = async (req: Request, res: Response) => {
   const {
     params: { user_id },
-    toUpdate,
+    toEdit,
   } = req;
 
-  const user = await editOneUserService({ user_id, toUpdate });
+  const user = await editOneUserService({ user_id, toEdit });
 
   return res.status(201).json(user);
 };

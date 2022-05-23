@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import rewardListService from "../../services/rewards/list.service";
 
-export const rewardListController = async (req: Request, res: Response) => {
+const listRewardsController = async (req: Request, res: Response) => {
   try {
     const rewards = await rewardListService();
 
@@ -17,3 +17,5 @@ export const rewardListController = async (req: Request, res: Response) => {
     });
   }
 };
+
+export default listRewardsController;

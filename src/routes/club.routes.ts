@@ -1,9 +1,9 @@
 import { Router } from "express";
-import clubCreateController from "../controller/club/create.controller";
-import clubDeleteOneController from "../controller/club/deleteOne.controller";
-import clubListController from "../controller/club/list.controller";
-import clubListOneController from "../controller/club/listOne.controller";
-import clubUpdateOneController from "../controller/club/updateOne.controller";
+import clubCreateController from "../controllers/club/create.controller";
+import clubDeleteOneController from "../controllers/club/deleteOne.controller";
+import clubListController from "../controllers/club/list.controller";
+import clubListOneController from "../controllers/club/listOne.controller";
+import clubUpdateOneController from "../controllers/club/updateOne.controller";
 import { expressYupMiddleware } from "express-yup-middleware";
 import createClubSchema from "../validations/club/createClub.validation";
 import updateClubSchema from "../validations/club/updateClub.validation";

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import AppError from "../errors";
+import AppError from "../../errors";
 
-const errorHandler = (
+const handeErrorMiddleware = (
   err: Error,
   req: Request,
   res: Response,
@@ -26,4 +26,4 @@ const errorHandler = (
   });
 };
 
-export default errorHandler;
+export default handeErrorMiddleware;

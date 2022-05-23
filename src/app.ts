@@ -1,7 +1,9 @@
 import express from "express";
-import errorHandler from "./middlewares/errorHandler.middleware";
+import "express-async-error";
 
 import appRoutes from "./routes";
+
+import { handleErrorMiddleware } from "./middlewares/handlers";
 
 const app = express();
 
@@ -9,6 +11,6 @@ app.use(express.json());
 
 appRoutes(app);
 
-app.use(errorHandler);
+app.use(handleErrorMiddleware);
 
 export default app;

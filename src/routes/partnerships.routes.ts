@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { expressYupMiddleware } from "express-yup-middleware";
-import partnershipCreateController from "../controller/partnerships/create.partnership";
-import partnershipDeleteController from "../controller/partnerships/delete.partnership";
-import partinershipListController from "../controller/partnerships/list.partership";
-import partnershipListOneController from "../controller/partnerships/listOne.parnership";
-import partnershipUpdateController from "../controller/partnerships/update.partinership";
+import partnershipCreateController from "../controllers/partnerships/create.partnership";
+import partnershipDeleteController from "../controllers/partnerships/delete.partnership";
+import partinershipListController from "../controllers/partnerships/list.partership";
+import partnershipListOneController from "../controllers/partnerships/listOne.parnership";
+import partnershipUpdateController from "../controllers/partnerships/update.partinership";
 import createPartnershipSchema from "../validations/partnerships/createPartnership.validation";
 
 const routes = Router();

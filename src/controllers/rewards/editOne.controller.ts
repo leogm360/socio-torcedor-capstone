@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import rewardUpdateOneService from "../../services/rewards/updateOne.service";
 
-const rewardUpdateOneController = async (req: Request, res: Response) => {
+const editOneRewardController = async (req: Request, res: Response) => {
   try {
     const { reward_id } = req.params;
     const { name, description } = req.body;
@@ -25,4 +25,4 @@ const rewardUpdateOneController = async (req: Request, res: Response) => {
   }
 };
 
-export default rewardUpdateOneController;
+export default editOneRewardController;

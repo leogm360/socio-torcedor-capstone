@@ -4,57 +4,47 @@ import { ICreateUser } from "../../interfaces/users";
 
 const createUserService = async ({
   name,
-  user_name,
+  userName,
   email,
   password,
   age,
   gender,
   phone,
   address,
-  club_id,
-  partnership_id,
-  is_adm,
+  clubId,
+  partnershipId,
+  isAdm = false,
 }: ICreateUser) => {
-  const { users, addresses, clubs, partnerships } = useRepo();
+  const { users, clubs, partnerships } = useRepo();
   const { errNotFound, errConflict } = useError();
 
-  const hasUser = await users.findOneBy({ name });
+  const user = await users.findOneBy({ name });
 
-  if (hasUser) throw errConflict;
+  if (user) throw errConflict;
 
-  const hasAddress = await addresses.findOneBy({
-    zip_code: address.zip_code,
-    street: address.street,
-    number_house: address.number_house,
-  });
+  const club = await clubs.findOneBy({ id: clubId });
 
-  const userAddress = hasAddress ? hasAddress : addresses.create(address);
+  const partnership = await partnerships.findOneBy({ id: partnershipId });
 
-  const hasClub = await clubs.findOneBy({ id: club_id });
-
-  const hasPartnership = await partnerships.findOneBy({ id: partnership_id });
-
-  if (!hasClub || !hasPartnership) throw errNotFound;
+  if (!club || !partnership) throw errNotFound;
 
   const newUser = users.create({
     name,
-    user_name,
+    userName,
     email,
     password,
     age,
     gender,
     phone,
-    address: userAddress,
-    club: hasClub,
-    partnership: hasPartnership,
-    is_adm,
+    address,
+    club,
+    partnership,
+    isAdm,
   });
 
   await users.save(newUser);
 
-  const { password: removed, ...userWithoutPassword } = newUser;
-
-  return userWithoutPassword;
+  return await users.findOneBy({ id: newUser.id });
 };
 
 export default createUserService;

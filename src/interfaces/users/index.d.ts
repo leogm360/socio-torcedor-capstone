@@ -10,14 +10,44 @@ interface IAdress {
 
 export interface ICreateUser {
   name: string;
-  user_name: string;
+  userName: string;
   email: string;
   password: string;
   age: number;
   gender: string;
   phone: string;
   address: IAdress;
-  club_id: number;
-  partnership_id: number;
-  is_adm: boolean;
+  clubId: number;
+  partnershipId: number;
+  isAdm: boolean;
+}
+
+export interface ILoginUser {
+  email: string;
+  userName: string;
+  password: string;
+}
+
+export interface IEditUserProps {
+  name?: string;
+  user_name?: string;
+  email?: string;
+  password?: string;
+  age?: number;
+  gender?: string;
+  phone?: string;
+  address?: IAdress;
+  club_id?: number;
+  partnership_id?: number;
+  is_adm?: boolean;
+}
+
+export interface IEditUserOne {
+  user_id: string;
+  toEdit: IEditUserProps;
+}
+
+export interface IEditUserMe {
+  userEmail: string;
+  toEdit: IEditUserProps;
 }

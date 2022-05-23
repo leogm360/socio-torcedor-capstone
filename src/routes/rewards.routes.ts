@@ -1,18 +1,29 @@
 import { Router } from "express";
-import { rewardCreateController } from "../controller/rewards/create.controller";
-import { rewardDeleteOneController } from "../controller/rewards/deleteOne.controller";
-import { rewardListController } from "../controller/rewards/list.controller";
-import { rewardListOneController } from "../controller/rewards/listOne.controller";
-import rewardUpdateOneController from "../controller/rewards/updateOne.controller";
+
+import { expressYupMiddleware } from "express-yup-middleware";
+
+import {
+  createRewardController,
+  listRewardsController,
+  listOneRewardController,
+  editOneRewardController,
+  deleteOneRewardController,
+} from "../controllers/rewards";
+
+import createRewardSchema from "../validations/rewards/createReward.validation";
 
 const routes = Router();
 
 const rewardsRoutes = () => {
-  routes.post("/", rewardCreateController);
-  routes.get("/", rewardListController);
-  routes.get("/:reward_id", rewardListOneController);
-  routes.patch("/:reward_id", rewardUpdateOneController);
-  routes.delete("/:reward_id", rewardDeleteOneController);
+  routes.post(
+    "/",
+    expressYupMiddleware({ schemaValidator: createRewardSchema }),
+    createRewardController
+  );
+  routes.get("/", listRewardsController);
+  routes.get("/:reward_id", listOneRewardController);
+  routes.patch("/:reward_id", editOneRewardController);
+  routes.delete("/:reward_id", deleteOneRewardController);
 
   return routes;
 };

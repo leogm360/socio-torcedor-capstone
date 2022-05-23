@@ -2,10 +2,7 @@ import { Request, Response } from "express";
 
 import rewardDeleteOneService from "../../services/rewards/deleteOne.service";
 
-export const rewardDeleteOneController = async (
-  req: Request,
-  res: Response
-) => {
+const deleteOneRewardController = async (req: Request, res: Response) => {
   try {
     const { reward_id } = req.params;
 
@@ -22,3 +19,5 @@ export const rewardDeleteOneController = async (
     });
   }
 };
+
+export default deleteOneRewardController;

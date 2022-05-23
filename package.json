@@ -6,19 +6,20 @@
   "author": "paulohliima <paulo.lima-16@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/src/server.js",
-    "tsnode:start": "ts-node .",
+    "tsnode:start": "ts-node --files .",
     "tsnode:dev": "ts-node-dev --transpile-only --watch --ignore-watch node-modules .",
     "jest:test": "NODE_ENV=test jest",
     "jest:watch": "NODE_ENV=test jest --watch",
     "typeorm": "typeorm-ts-node-commonjs",
-    "migrations": "chmod +x ./src/scripts/*.sh && ./src/scripts/typeorm-migrations.sh"
+    "migrations": "chmod +x ./src/scripts/*.sh && ./src/scripts/typeorm-migrations.sh",
+    "postgres": "chmod +x ./src/scripts/*.sh && ./src/scripts/postgres.sh"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-async-error": "^0.0.2",
+    "express-yup-middleware": "^1.2.3",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",

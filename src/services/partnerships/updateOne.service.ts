@@ -19,6 +19,8 @@ const partnershipUpdateOneService = async ({
     (partnership) => partnership.id.toString() === partnership_id
   );
 
+  console.log(partnership?.rewards);
+
   if (!partnership) throw errNotFound;
 
   let listRewards: Reward[] = partnership.rewards;
@@ -41,10 +43,12 @@ const partnershipUpdateOneService = async ({
   partnership.name = name ? name : partnership.name;
   partnership.price = price ? price : partnership.price;
 
+  console.log(...listRewards);
+
   await partnerships.update(partnership!.id, {
     name: partnership.name,
     price: partnership.price,
-    rewards: listRewards,
+    rewards: [...listRewards],
   });
 
   return partnership;

@@ -4,7 +4,6 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
   ManyToOne,
   JoinColumn,
 } from "typeorm";
@@ -12,7 +11,6 @@ import { Address } from "./address.entity";
 import { Club } from "./club.entity";
 import { Partnership } from "./partnership.entity";
 import { v4 as uuid } from "uuid";
-import { boolean } from "yup";
 
 @Entity("users")
 export class User {
@@ -22,8 +20,8 @@ export class User {
   @Column()
   name: string;
 
-  @Column()
-  user_name: string;
+  @Column({ name: "user_name" })
+  userName: string;
 
   @Column()
   email: string;
@@ -61,8 +59,8 @@ export class User {
   // @JoinTable()
   // matches: Matches[];
 
-  @Column()
-  is_adm: boolean;
+  @Column({ name: "is_adm" })
+  isAdm: boolean;
 
   @CreateDateColumn()
   readonly created_at: Date;

@@ -1628,6 +1628,11 @@ expect@^28.1.0:
     jest-message-util "^28.1.0"
     jest-util "^28.1.0"
 
+express-async-error@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/express-async-error/-/express-async-error-0.0.2.tgz#6a008690283b252100f41fb00a7496fc25d06bf3"
+  integrity sha1-agCGkCg7JSEA9B+wCnSW/CXQa/M=
+
 express-yup-middleware@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/express-yup-middleware/-/express-yup-middleware-1.2.3.tgz#f25555eb06bb340aae307eeecb269d807b0500e8"

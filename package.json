@@ -12,12 +12,13 @@
     "jest:watch": "NODE_ENV=test jest --watch",
     "typeorm": "typeorm-ts-node-commonjs",
     "migrations": "chmod +x ./src/scripts/*.sh && ./src/scripts/typeorm-migrations.sh",
-    "postgres": "chmod +x ./src/scripts/*.sh && ./src/scripts/postgres-user.sh"
+    "postgres": "chmod +x ./src/scripts/*.sh && ./src/scripts/postgres.sh"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-async-error": "^0.0.2",
     "express-yup-middleware": "^1.2.3",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",

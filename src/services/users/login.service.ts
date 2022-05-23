@@ -5,11 +5,13 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-const loginUserService = async ({ email, user_name, password }: ILoginUser) => {
+const loginUserService = async ({ email, userName, password }: ILoginUser) => {
   const { users } = useRepo();
   const { errNotFound, errAccess } = useError();
 
-  const user = await users.findOne({ where: [{ email }, { user_name }] });
+  const user = await users.findOne({
+    where: [{ email }, { userName }],
+  });
 
   if (!user) throw errNotFound;
 
@@ -17,7 +19,10 @@ const loginUserService = async ({ email, user_name, password }: ILoginUser) => {
     if (!result) throw errAccess;
   });
 
-  const token = jwt.sign({ userEmail: user.email }, process.env.JWT_SECRET);
+  const token = jwt.sign(
+    { userEmail: user.email },
+    process.env.JWT_SECRET as string
+  );
 
   return token;
 };

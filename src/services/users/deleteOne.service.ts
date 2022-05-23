@@ -1,7 +1,7 @@
 import useRepo from "../../hooks/useRepo";
 import useError from "../../hooks/useError";
 
-const deleteMeUserService = async (user_id: string) => {
+const deleteOneUserService = async (user_id: string) => {
   const { users } = useRepo();
   const { errNotFound, errServer } = useError();
 
@@ -18,4 +18,4 @@ const deleteMeUserService = async (user_id: string) => {
   }
 };
 
-export default deleteMeUserService;
+export default deleteOneUserService;

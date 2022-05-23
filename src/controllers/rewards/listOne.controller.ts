@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import rewardListOneService from "../../services/rewards/listOne.service";
 
-export const rewardListOneController = async (req: Request, res: Response) => {
+const listOneRewardController = async (req: Request, res: Response) => {
   const { reward_id } = req.params;
 
   try {
@@ -19,3 +19,5 @@ export const rewardListOneController = async (req: Request, res: Response) => {
     });
   }
 };
+
+export default listOneRewardController;

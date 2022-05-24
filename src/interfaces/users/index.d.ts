@@ -1,8 +1,8 @@
-interface IAdress {
+export interface IAdress {
   zip_code: string;
   street: string;
   number_house: string;
-  complement?: string;
+  complement: string | undefined;
   city: string;
   state: string;
   country: string;

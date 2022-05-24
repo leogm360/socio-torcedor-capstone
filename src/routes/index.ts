@@ -1,5 +1,4 @@
 import { Express } from "express";
-
 import clubRoutes from "./club.routes";
 import partnershipsRoutes from "./partnerships.routes";
 import rewardsRoutes from "./rewards.routes";

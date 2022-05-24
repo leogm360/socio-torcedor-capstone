@@ -2,7 +2,7 @@ import useRepo from "../../hooks/useRepo";
 import useError from "../../hooks/useError";
 import { IRewardUpdate } from "../../interfaces/rewards";
 
-const rewardUpdateOneService = async ({
+const editOneRewardService = async ({
   reward_id,
   name,
   description,
@@ -36,4 +36,4 @@ const rewardUpdateOneService = async ({
   return reward;
 };
 
-export default rewardUpdateOneService;
+export default editOneRewardService;

@@ -1,7 +1,7 @@
 import useRepo from "../../hooks/useRepo";
 import useError from "../../hooks/useError";
 
-const rewardListOneService = async (reward_id: String) => {
+const listOneRewardService = async (reward_id: String) => {
   const { rewards } = useRepo();
   const { errNotFound } = useError();
 
@@ -16,4 +16,4 @@ const rewardListOneService = async (reward_id: String) => {
   return reward;
 };
 
-export default rewardListOneService;
+export default listOneRewardService;

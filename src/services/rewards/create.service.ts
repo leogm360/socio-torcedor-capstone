@@ -3,7 +3,7 @@ import useError from "../../hooks/useError";
 import { IRewardCreate } from "../../interfaces/rewards";
 import { Reward } from "../../entities";
 
-const rewardCreateService = async ({ name, description }: IRewardCreate) => {
+const createRewardService = async ({ name, description }: IRewardCreate) => {
   const { rewards } = useRepo();
   const { errConflict } = useError();
 
@@ -22,4 +22,4 @@ const rewardCreateService = async ({ name, description }: IRewardCreate) => {
   return newReward;
 };
 
-export default rewardCreateService;
+export default createRewardService;

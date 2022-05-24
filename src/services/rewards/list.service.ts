@@ -1,6 +1,6 @@
 import useRepo from "../../hooks/useRepo";
 
-const rewardListService = async () => {
+const listRewardsService = async () => {
   const { rewards } = useRepo();
 
   const listRewards = rewards.find();
@@ -8,4 +8,4 @@ const rewardListService = async () => {
   return listRewards;
 };
 
-export default rewardListService;
+export default listRewardsService;

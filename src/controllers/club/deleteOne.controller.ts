@@ -1,23 +1,12 @@
 import { Request, Response } from "express";
+import { deleteOneClubService } from "../../services";
 
-import clubDeleteOneService from "../../services/club/deleteOne.service";
+const deleteOneClubController = async (req: Request, res: Response) => {
+  const { club_id } = req.params;
 
-const clubDeleteOneController = async (req: Request, res: Response) => {
-  try {
-    const { club_id } = req.params;
+  await deleteOneClubService(club_id);
 
-    const club = await clubDeleteOneService(club_id);
-
-    return res.status(204).send({});
-  } catch (err: any) {
-    const { statusCode, message } = err;
-
-    return res.status(statusCode).send({
-      status: "err",
-      statusCode,
-      message,
-    });
-  }
+  return res.status(204).json();
 };
 
-export default clubDeleteOneController;
+export default deleteOneClubController;

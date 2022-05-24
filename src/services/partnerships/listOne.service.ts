@@ -1,7 +1,7 @@
 import useError from "../../hooks/useError";
 import useRepo from "../../hooks/useRepo";
 
-const partnershipListOneService = async (id: string) => {
+const listOnePartnershipService = async (id: string) => {
   const { partnerships } = useRepo();
   const { errNotFound } = useError();
 
@@ -16,4 +16,4 @@ const partnershipListOneService = async (id: string) => {
   return partnership;
 };
 
-export default partnershipListOneService;
+export default listOnePartnershipService;

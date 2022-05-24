@@ -10,3 +10,9 @@ export interface IUpdatePartnership {
   price: number;
   rewards_id: [];
 }
+
+export interface IUpdatePartnershipSchema {
+  name?: string;
+  price?: string;
+  rewards_id?: array;
+}

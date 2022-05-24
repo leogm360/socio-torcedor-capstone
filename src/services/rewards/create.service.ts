@@ -17,7 +17,7 @@ const rewardCreateService = async ({ name, description }: IRewardCreate) => {
   newReward.description = description;
 
   rewards.create(newReward);
-  rewards.save(newReward);
+  await rewards.save(newReward);
 
   return newReward;
 };

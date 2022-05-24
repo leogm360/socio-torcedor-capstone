@@ -1,13 +1,18 @@
 import { DataSource } from "typeorm";
 import "reflect-metadata";
-require("dotenv").config();
+import "dotenv/config";
 
 export const AppDataSource =
   process.env.NODE_ENV === "test"
     ? new DataSource({
-        type: "sqlite",
-        database: ":memory:",
+        type: "postgres",
+        host: "localhost",
+        username: process.env.POSTGRES_TEST_USER,
+        database: process.env.POSTGRES_TEST_DB,
+        password: process.env.POSTGRES_TEST_PWD,
+        port: 5432,
         entities: ["src/entities/*.ts"],
+        migrations: ["src/migrations/*.ts"],
         synchronize: true,
         dropSchema: true,
         logging: false,

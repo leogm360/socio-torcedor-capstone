@@ -10,11 +10,11 @@ import rewardUpdateOneService from "../../../services/rewards/updateOne.service"
 describe("Unitary Create Reward Service on Success", () => {
   let connection: DataSource;
 
-  const rewardOne = {
+  const rewardOne: any = {
     name: "5 Points",
     description: "Gain one ticket for a match for your favorite team",
   };
-  const rewardTwo = {
+  const rewardTwo: any = {
     name: "10 Points",
     description: "Gain one clothes for your favorite team",
   };

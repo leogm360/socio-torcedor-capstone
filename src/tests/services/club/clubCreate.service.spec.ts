@@ -7,13 +7,13 @@ import clubDeleteOneService from "../../../services/club/deleteOne.service";
 import clubListService from "../../../services/club/list.service";
 import clubListOneService from "../../../services/club/listOne.service";
 
-describe("Unitary Create User Service on Success", () => {
+describe("Unitary Create Club Service on Success", () => {
   let connection: DataSource;
 
-  const clubOne = {
+  const clubOne: any = {
     name: "São Paulo FC",
   };
-  const clubTwo = {
+  const clubTwo: any = {
     name: "Fluminense FC",
   };
 
@@ -70,7 +70,7 @@ describe("Unitary Create User Service on Success", () => {
   });
 });
 
-describe("Unitary Create User Service on Fail", () => {
+describe("Unitary Create Club Service on Fail", () => {
   let connection: DataSource;
 
   const { errConflict, errNotFound } = useError();
@@ -78,7 +78,7 @@ describe("Unitary Create User Service on Fail", () => {
   const clubOne = {
     name: "São Paulo FC",
   };
-  const clubTwo = {
+  const clubTwo: any = {
     name: "Fluminense FC",
   };
 

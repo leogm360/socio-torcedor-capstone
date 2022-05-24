@@ -1,4 +1,4 @@
-interface IAdress {
+export interface IAdress {
   zip_code: string;
   street: string;
   number_house: string;

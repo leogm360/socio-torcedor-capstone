@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { expressYupMiddleware } from "express-yup-middleware";
+import checkCreateUserMiddleware from "../middlewares/checks/checkCreateUser.middleware";
 
 import {
   createUserController,
@@ -20,7 +21,7 @@ const routes = Router();
 const userRoutes = () => {
   routes.post(
     "/",
-    expressYupMiddleware({ schemaValidator: createUserSchema }),
+    checkCreateUserMiddleware(createUserSchema),
     createUserController
   );
   routes.post("/login", loginUserController);

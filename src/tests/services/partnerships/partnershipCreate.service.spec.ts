@@ -30,4 +30,13 @@ describe("Create a Partnerships", () => {
     expect(createPartnership).toHaveProperty("price");
     expect(createPartnership).toHaveProperty("rewards");
   });
+
+  test("Should be able to create a new partnership with reward", async () => {
+    const createPartnership = await partnershipCreateService({
+      name: "Premium",
+      price: 300.0,
+      rewards_id: [],
+    });
+    expect(createPartnership.rewards).toBeInstanceOf(array);
+  });
 });

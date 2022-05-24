@@ -25,7 +25,7 @@ export class Partnership {
   @OneToMany((type) => User, (user) => user.partnership)
   users: User[];
 
-  @ManyToMany((type) => Reward, { eager: true })
+  @ManyToMany((type) => Reward, { eager: true, cascade: ["update"] })
   @JoinTable()
   rewards: Reward[];
 

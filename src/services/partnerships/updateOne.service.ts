@@ -42,14 +42,9 @@ const partnershipUpdateOneService = async ({
 
   partnership.name = name ? name : partnership.name;
   partnership.price = price ? price : partnership.price;
+  partnership.rewards = listRewards;
 
-  console.log(...listRewards);
-
-  await partnerships.update(partnership!.id, {
-    name: partnership.name,
-    price: partnership.price,
-    rewards: [...listRewards],
-  });
+  await partnerships.save(partnership);
 
   return partnership;
 };

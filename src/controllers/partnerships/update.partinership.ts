@@ -18,6 +18,8 @@ const partnershipUpdateController = async (req: Request, res: Response) => {
   } catch (err: any) {
     const { statusCode, message } = err;
 
+    console.log(statusCode);
+
     return res.status(statusCode).send({
       status: "err",
       statusCode,

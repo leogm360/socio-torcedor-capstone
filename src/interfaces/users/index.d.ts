@@ -2,7 +2,7 @@ interface IAdress {
   zip_code: string;
   street: string;
   number_house: string;
-  complement: string | undefined;
+  complement?: string;
   city: string;
   state: string;
   country: string;

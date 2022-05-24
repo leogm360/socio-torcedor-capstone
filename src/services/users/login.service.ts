@@ -13,9 +13,12 @@ const loginUserService = async ({ email, userName, password }: ILoginUser) => {
     where: [{ email }, { userName }],
   });
 
+  console.log(user);
+
   if (!user) throw errNotFound;
 
-  bcrypt.compare(password, user.password, (_, result) => {
+  bcrypt.compare(password, "123456", (_, result) => {
+    console.log(result);
     if (!result) throw errAccess;
   });
 

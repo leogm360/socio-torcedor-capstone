@@ -1,23 +1,12 @@
 import { Request, Response } from "express";
-
-import rewardDeleteOneService from "../../services/rewards/deleteOne.service";
+import { deleteOneRewardService } from "../../services";
 
 const deleteOneRewardController = async (req: Request, res: Response) => {
-  try {
-    const { reward_id } = req.params;
+  const { reward_id } = req.params;
 
-    const reward = await rewardDeleteOneService(reward_id);
+  await deleteOneRewardService(reward_id);
 
-    return res.status(204).send({});
-  } catch (err: any) {
-    const { statusCode, message } = err;
-
-    return res.status(statusCode).send({
-      status: "err",
-      statusCode,
-      message,
-    });
-  }
+  return res.status(204).json();
 };
 
 export default deleteOneRewardController;

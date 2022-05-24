@@ -1,27 +1,16 @@
 import { Request, Response } from "express";
+import { createPartnershipService } from "../../services";
 
-import partnershipCreateService from "../../services/partnerships/create.service";
+const createPartnershipController = async (req: Request, res: Response) => {
+  const { name, price, rewards_id } = req.body;
 
-const partnershipCreateController = async (req: Request, res: Response) => {
-  try {
-    const { name, price, rewards_id } = req.body;
+  const partnership = await createPartnershipService({
+    name,
+    price,
+    rewards_id,
+  });
 
-    const partnership = await partnershipCreateService({
-      name,
-      price,
-      rewards_id,
-    });
-
-    return res.status(201).json(partnership);
-  } catch (err: any) {
-    const { statusCode, message } = err;
-
-    return res.status(statusCode).send({
-      status: "err",
-      statusCode,
-      message,
-    });
-  }
+  return res.status(201).json(partnership);
 };
 
-export default partnershipCreateController;
+export default createPartnershipController;

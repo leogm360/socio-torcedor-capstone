@@ -1,23 +1,12 @@
 import { Request, Response } from "express";
+import { createClubService } from "../../services";
 
-import clubCreateService from "../../services/club/create.service";
+const createClubController = async (req: Request, res: Response) => {
+  const { name } = req.body;
 
-const clubCreateController = async (req: Request, res: Response) => {
-  try {
-    const { name } = req.body;
+  const newClub = await createClubService({ name });
 
-    const newClub = await clubCreateService({ name });
-
-    return res.status(201).send(newClub);
-  } catch (err: any) {
-    const { statusCode, message } = err;
-
-    return res.status(statusCode).send({
-      status: "err",
-      statusCode,
-      message,
-    });
-  }
+  return res.status(201).send(newClub);
 };
 
-export default clubCreateController;
+export default createClubController;

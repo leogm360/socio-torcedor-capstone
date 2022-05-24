@@ -1,21 +1,10 @@
 import { Request, Response } from "express";
+import { listClubsService } from "../../services";
 
-import clubListService from "../../services/club/list.service";
+const listClubsController = async (req: Request, res: Response) => {
+  const listClubs = await listClubsService();
 
-const clubListController = async (req: Request, res: Response) => {
-  try {
-    const listClubs = await clubListService();
-
-    return res.status(200).send(listClubs);
-  } catch (err: any) {
-    const { statusCode, message } = err;
-
-    return res.status(statusCode).send({
-      status: "err",
-      statusCode,
-      message,
-    });
-  }
+  return res.json(listClubs);
 };
 
-export default clubListController;
+export default listClubsController;

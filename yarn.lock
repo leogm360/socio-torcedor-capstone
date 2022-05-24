@@ -1643,6 +1643,11 @@ express-async-error@^0.0.2:
   resolved "https://registry.yarnpkg.com/express-async-error/-/express-async-error-0.0.2.tgz#6a008690283b252100f41fb00a7496fc25d06bf3"
   integrity sha1-agCGkCg7JSEA9B+wCnSW/CXQa/M=
 
+express-async-errors@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/express-async-errors/-/express-async-errors-3.1.1.tgz#6053236d61d21ddef4892d6bd1d736889fc9da41"
+  integrity sha512-h6aK1da4tpqWSbyCa3FxB/V6Ehd4EEB15zyQq9qe75OZBp0krinNKuH4rAY+S/U/2I36vdLAUFSjQJ+TFmODng==
+
 express-yup-middleware@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/express-yup-middleware/-/express-yup-middleware-1.2.3.tgz#f25555eb06bb340aae307eeecb269d807b0500e8"

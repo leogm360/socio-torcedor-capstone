@@ -1,28 +1,19 @@
 import { Request, Response } from "express";
-
-import rewardUpdateOneService from "../../services/rewards/updateOne.service";
+import { editOneRewardService } from "../../services";
 
 const editOneRewardController = async (req: Request, res: Response) => {
-  try {
-    const { reward_id } = req.params;
-    const { name, description } = req.body;
+  const {
+    body: { name, description },
+    params: { reward_id },
+  } = req;
 
-    const reward = await rewardUpdateOneService({
-      reward_id,
-      name,
-      description,
-    });
+  const reward = await editOneRewardService({
+    reward_id,
+    name,
+    description,
+  });
 
-    return res.status(201).send(reward);
-  } catch (err: any) {
-    const { statusCode, message } = err;
-
-    return res.status(statusCode).send({
-      status: "err",
-      statusCode,
-      message,
-    });
-  }
+  return res.status(201).send(reward);
 };
 
 export default editOneRewardController;

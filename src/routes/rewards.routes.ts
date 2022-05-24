@@ -1,16 +1,13 @@
 import { Router } from "express";
-
 import { expressYupMiddleware } from "express-yup-middleware";
-
 import {
   createRewardController,
   listRewardsController,
   listOneRewardController,
   editOneRewardController,
   deleteOneRewardController,
-} from "../controllers/rewards";
-
-import createRewardSchema from "../validations/rewards/createReward.validation";
+} from "../controllers";
+import { createRewardSchema } from "../validations";
 
 const routes = Router();
 

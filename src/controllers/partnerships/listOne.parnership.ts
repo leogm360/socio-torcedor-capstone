@@ -1,23 +1,12 @@
 import { Request, Response } from "express";
-import AppError from "../../errors";
-import partnershipListOneService from "../../services/partnerships/listOne.service";
+import { listOnePartnershipService } from "../../services";
 
-const partnershipListOneController = async (req: Request, res: Response) => {
-  try {
-    const { partnership_id } = req.params;
+const listOnePartnershipController = async (req: Request, res: Response) => {
+  const { partnership_id } = req.params;
 
-    const partnership = await partnershipListOneService(partnership_id);
+  const partnership = await listOnePartnershipService(partnership_id);
 
-    return res.status(201).json(partnership);
-  } catch (err: any) {
-    const { statusCode, message } = err;
-
-    return res.status(statusCode).send({
-      status: "err",
-      statusCode,
-      message,
-    });
-  }
+  return res.status(200).json(partnership);
 };
 
-export default partnershipListOneController;
+export default listOnePartnershipController;

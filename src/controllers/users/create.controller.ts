@@ -14,7 +14,9 @@ const createUserController = async (req: Request, res: Response) => {
     address,
     partnershipId,
     clubId,
-  } = req.body;
+  } = req.newUser;
+
+  console.log(req);
 
   const user = await createUserService({
     name,

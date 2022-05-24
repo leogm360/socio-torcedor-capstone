@@ -7,7 +7,6 @@ const clubCreateService = async ({ name }: IClubCreate) => {
   const { clubs } = useRepo();
   const { errConflict } = useError();
 
-  console.log("teste");
   const ClubAlreadyExists = await clubs.findOneBy({
     name: name,
   });

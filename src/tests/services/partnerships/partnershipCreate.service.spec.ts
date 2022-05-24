@@ -10,6 +10,7 @@ import partnershipListOneService from "../../../services/partnerships/listOne.se
 import partnershipUpdateOneService from "../../../services/partnerships/updateOne.service";
 import rewardCreateService from "../../../services/rewards/create.service";
 
+
 describe("Create a Partnerships", () => {
   let connection: DataSource;
 

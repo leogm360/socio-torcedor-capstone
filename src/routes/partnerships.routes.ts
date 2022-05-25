@@ -7,7 +7,10 @@ import {
   editOnePartnershipController,
   deleteOnePartnershipController,
 } from "../controllers";
-import { createPartnershipSchema } from "../validations";
+import {
+  createPartnershipSchema,
+  updatePartnershipSchema,
+} from "../validations";
 
 const routes = Router();
 
@@ -20,7 +23,11 @@ const partnershipsRoutes = () => {
   routes.post("/:partnership_id/:reward_id");
   routes.get("/", listPartinershipsController);
   routes.get("/:partnership_id", listOnePartnershipController);
-  routes.patch("/:partnership_id", editOnePartnershipController);
+  routes.patch(
+    "/:partnership_id",
+    expressYupMiddleware({ schemaValidator: updatePartnershipSchema }),
+    editOnePartnershipController
+  );
   routes.delete("/:partnership_id", deleteOnePartnershipController);
 
   return routes;

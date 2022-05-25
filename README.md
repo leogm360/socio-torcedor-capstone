@@ -1,5 +1,5 @@
 # Documentação da API Sócio-Torcedor
-API desenvolvida para cadastro e gerenciamento de usuários de programa de sócio torcedor de um clube de futebol.
+API desenvolvida para cadastro e gerenciamento de usuários, planos, benefícios e clubes de programa de sócio torcedor.
 
 ## Tabela de Conteúdos
 
@@ -25,15 +25,14 @@ Algumas das tecnologias usadas:
 - [TypeORM](https://typeorm.io/)
 
 URL base da aplicação:
-*************INSERIR URL***************
+https://socio-torcedor-api-capstone-m4.herokuapp.com/
 
 ---
 
 ## 2. Diagrama ER
 [ Voltar para o topo ](#tabela-de-conteúdos)
 
-
-Diagrama ER da API definindo bem as relações entre as tabelas do banco de dados.
+![NlV6hp1](https://user-images.githubusercontent.com/89955737/170357216-75f245c7-8998-4044-8d25-67ff2419f413.png)
 
 
 
@@ -71,6 +70,8 @@ yarn typeorm migration:run -d src/data-source.ts
 ## 4. Autenticação
 [ Voltar para o topo ](#tabela-de-conteúdos)
 
+A autenticação será feita através do [endpoint de login](#12-login-de-usuário). O retorno esperado, em caso de sucesso, deverá conter um token JWT.
+
 ---
 
 ## 5. Endpoints
@@ -105,11 +106,11 @@ yarn typeorm migration:run -d src/data-source.ts
 	- [DELETE - /rewards/:reward_id](#35-deletar-benefício-por-id) 
 
 - [Clubs](#4-clubs)
- 	- [POST - /clubs](#31-criação-de-clube)
-	- [GET - /clubs/](#32-listar-todos-clubes)
-	- [GET - /clubs/:reward_id](#33-listar-clube-por-id)
-	- [PATCH - /clubs/:club_id](#34-atualizar-clube-por-id)
-	- [DELETE - /clubs/:club_id](#35-deletar-clube-por-id) 
+ 	- [POST - /clubs](#41-criação-de-clube)
+	- [GET - /clubs/](#42-listar-todos-clubes)
+	- [GET - /clubs/:reward_id](#43-listar-clube-por-id)
+	- [PATCH - /clubs/:club_id](#44-atualizar-clube-por-id)
+	- [DELETE - /clubs/:club_id](#45-deletar-clube-por-id) 
 
 ---
 
@@ -122,16 +123,19 @@ O objeto User é definido como:
 | --------------|--------|-------------------------------------------------|
 | id            | string | Identificador único do usuário                  |
 | name          | string | O nome do usuário.                              |
-| username      | string | O username do usuário                           |
+| userName      | string | O username do usuário                           |
+| email         | string | O email do usuário                              |
 | password      | string | A senha de acesso do usuário                    |
 | age           | number | A idade do usuário                              |
-| phone         | integer| O telefone do usuário                           |
-| gender        | integer| O sexo do usuário                               |
+| phone         | string | O telefone do usuário                           |
+| gender        | string | O sexo do usuário                               |
 | isAdm         | boolean| Define se um usuário é Administrador ou não     |
 | created_at    | date   | Data de criação do usuário                      |
 | updated_at    | date   | Data de atualização do usuário                  |
-| address_id    | number | Referência ao endereço na tabelas address       |
-| partnership_id| number | Referência ao plano na tabelas partnerships     |
+| address       | object | Objeto contendo endereço do usuário             |
+| partnershipId | number | Referência ao plano na tabelas partnerships     |
+| clubId        | number | Referência ao clube na tabelas clubs            |
+
 
 
 
@@ -161,7 +165,7 @@ O objeto User é definido como:
 ### Exemplo de Request:
 ```
 POST /users
-Host: http://suaapi.com/v1**************
+Host: https://socio-torcedor-api-capstone-m4.herokuapp.com/
 Authorization: None
 Content-type: application/json
 ```
@@ -170,51 +174,45 @@ Content-type: application/json
 ```json
 {
 	"name": "Leonardo Moraes",
-	"user_name": "leogm360",
+	"userName": "leogm360",
+	  "email": "leonardo@email.com",
 	"password": "123456789",
-	"age": 20,
+	"age": 32,
 	"gender": "Masculino",
 	"phone": "99123456789",
-	"address":{
-    "zip_code":"12345678",
-    "street": "Rua sete de setembro",
-    "number": 26,
-    "complement": "Prédio",
-    "city": "Rio de Janeiro",
-    "state": "RJ",
-    "country": "Brasil"  
-  } 
-	"is_adm": true,
-	"partnership": 1,
+	"address": {
+	    "zip_code":"12345678",
+	    "street": "Rua sete de setembro",
+	    "number_house": 26,
+	    "complement": "Prédio",
+	    "city": "Rio de Janeiro",
+	    "state": "RJ",
+	    "country": "Brasil"  
+	  }, 
+	"isAdm": false,
+	"partnership": 3,
+	"clubId": 2
 }
 ```
 
 ### Schema de Validação com Yup:
 ```javascript
 
-*****EXEMPLO*****
-name: yup
-        .string()
-	.required()
-	.transform((value, originalValue) => { 
-		return titlelify(originalValue) 
-	}),
-email: yup
-        .string()
-	.email()
-	.required()
-	.transform((value, originalValue) => { 
-		return originalValue.toLowerCase() 
-	}),
-password: yup
-        .string()
-	.required()
-	.transform((value, originalValue) => { 
-		return bcrypt.hashSync(originalValue, 10) 
-	}),
-isAdm: yup
-        .boolean()
-	.required(),
+  name: yup.string().required("name is required"),
+  userName: yup.string().required("userName is required"),
+  email: yup.string().required("email is required"),
+  password: yup
+    .string()
+    .required()
+    .min(6, "password must have at least 6 characters")
+    .transform((password: string) => bcrypt.hashSync(password, 10)),
+  age: yup.number().required("age is required"),
+  gender: yup.string().required("gender is required"),
+  phone: yup.string().required("phone is required"),
+  address: addressSchema,
+  clubId: yup.number().required("clubid is required"),
+  partnershipId: yup.number().required("partnershipId is required"),
+  isAdm: yup.boolean().required("isAdm is required"),
 ```
 OBS.: Chaves não presentes no schema serão removidas.
 
@@ -225,28 +223,50 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-	"id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
+	"id": "77c4e27c-68d9-404e-810b-3b63d49ff8d5",
 	"name": "Leonardo Moraes",
-	"user_name": "leo360",
-	"email": "leonardo@email.com",
-  "age": 20,
-  "gender": "Masculino",
-  "phone": "99123456789",
-  "address":{
-    "zip_code":"12345678",
-    "street": "Rua sete de setembro",
-    "number": 26,
-    "complement": "Prédio",
-    "city": "Rio de Janeiro",
-    "state": "RJ",
-    "country": "Brasil",
-    "created_at": "2022-05-15 16:29:51.350149",
-    "updated_at": "2022-05-15 16:29:51.350149"
-  } 
-	"is_adm": true,
-	"partnership": 1,
-  "created_at": "2022-05-15 16:29:51.350149",
-  "updated_at": "2022-05-15 16:29:51.350149"
+	"userName": "leogm360",
+	"email": "rodrigo@email.com",
+	"age": 32,
+	"gender": "male",
+	"phone": "123456789",
+	"isAdm": false,
+	"created_at": "2022-05-25T20:46:54.153Z",
+	"update_at": "2022-05-25T20:46:54.153Z",
+	"address": {
+		"id": 68,
+		"zip_code": "12345678",
+		"street": "Rua sete de setembro",
+		"number_house": "26",
+		"complement": "Prédio",
+		"city": "Rio de Janeiro",
+		"state": "RJ",
+		"country": "Brasil",
+		"created_at": "2022-05-25T20:46:54.153Z",
+		"updated_at": "2022-05-25T20:46:54.153Z"
+	},
+	"partnership": {
+		"id": 3,
+		"name": "Silverzao",
+		"price": 99.9,
+		"created_at": "2022-05-25T16:02:59.951Z",
+		"update_at": "2022-05-25T16:02:59.951Z",
+		"rewards": [
+			{
+				"id": 3,
+				"name": "Desconto ingressos 20",
+				"description": "20% de desconto em ingressos",
+				"created_at": "2022-05-25T16:02:50.918Z",
+				"update_at": "2022-05-25T16:02:50.918Z"
+			}
+		]
+	},
+	"club": {
+		"id": 2,
+		"name": "Fluminense",
+		"created_at": "2022-05-25T16:02:08.090Z",
+		"update_at": "2022-05-25T16:02:08.090Z"
+	}
 }
 ```
 
@@ -254,6 +274,8 @@ OBS.: Chaves não presentes no schema serão removidas.
 | Código do Erro | Descrição |
 |----------------|-----------|
 | 409 Conflict   | Conflict, resource already registered. |
+| 400 Bad Request| name is required                       |
+
 
 ---
 

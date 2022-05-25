@@ -269,6 +269,33 @@ describe("Unitary User Services on Success", () => {
     expect(user.partnership).toBeInstanceOf(Partnership);
     expect(user.partnership).toEqual(expect.objectContaining(partnership));
   });
+
+  it("Should be able to edit one User data by user id.", async () => {
+    const user = await listMeUserService(emailTwo);
+
+    expect(user).toBeTruthy();
+    expect(user).toBeInstanceOf(User);
+    expect(user).toEqual(
+      expect.objectContaining({
+        id: "8575e51f-2d48-4297-be3f-c59931638545",
+        name: nameTwo,
+        userName: userNameTwo,
+        email: emailTwo,
+        age: ageTwo,
+        gender: genderTwo,
+        phone: phoneTwo,
+        isAdm: isAdmTwo,
+      })
+    );
+    expect(user.address).toBeInstanceOf(Address);
+    expect(user.address).toEqual(
+      expect.objectContaining({ ...address, complement: null })
+    );
+    expect(user.club).toBeInstanceOf(Club);
+    expect(user.club).toEqual(expect.objectContaining(club));
+    expect(user.partnership).toBeInstanceOf(Partnership);
+    expect(user.partnership).toEqual(expect.objectContaining(partnership));
+  });
 });
 
 describe("Unitary User Services on Fail", () => {

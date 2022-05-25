@@ -7,7 +7,7 @@ import {
   editOneRewardController,
   deleteOneRewardController,
 } from "../controllers";
-import { createRewardSchema } from "../validations";
+import { createRewardSchema, updateRewardSchema } from "../validations";
 
 const routes = Router();
 
@@ -19,7 +19,11 @@ const rewardsRoutes = () => {
   );
   routes.get("/", listRewardsController);
   routes.get("/:reward_id", listOneRewardController);
-  routes.patch("/:reward_id", editOneRewardController);
+  routes.patch(
+    "/:reward_id",
+    expressYupMiddleware({ schemaValidator: updateRewardSchema }),
+    editOneRewardController
+  );
   routes.delete("/:reward_id", deleteOneRewardController);
 
   return routes;

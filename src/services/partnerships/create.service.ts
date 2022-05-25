@@ -1,6 +1,6 @@
 import { In } from "typeorm";
 import { Reward } from "../../entities";
-import { Partnership } from "../../entities/partnership.entity";
+import { Partnership } from "../../entities";
 import useError from "../../hooks/useError";
 import useRepo from "../../hooks/useRepo";
 import { ICreatePartnership } from "../../interfaces/partnership/index";

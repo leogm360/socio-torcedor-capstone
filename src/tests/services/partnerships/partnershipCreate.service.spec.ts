@@ -3,13 +3,14 @@ import { AppDataSource } from "../../../data-source";
 import useError from "../../../hooks/useError";
 import useRepo from "../../../hooks/useRepo";
 import { ICreatePartnership } from "../../../interfaces/partnership";
-import partnershipCreateService from "../../../services/partnerships/create.service";
-import partnershipDeleteOneService from "../../../services/partnerships/deleteOne.service";
-import partinershipsListService from "../../../services/partnerships/list.service";
-import partnershipListOneService from "../../../services/partnerships/listOne.service";
-import partnershipUpdateOneService from "../../../services/partnerships/updateOne.service";
-import rewardCreateService from "../../../services/rewards/create.service";
-
+import {
+  createPartnershipService,
+  listPartinershipsService,
+  listOnePartnershipService,
+  editOnePartnershipService,
+  deleteOnePartnershipService,
+  createRewardService,
+} from "../../../services";
 
 describe("Create a Partnerships", () => {
   let connection: DataSource;
@@ -40,8 +41,8 @@ describe("Create a Partnerships", () => {
         console.error("Error during data source initialization", err)
       );
 
-    const newPartnership = await partnershipCreateService(partnershipOne);
-    const newRewards = await rewardCreateService(reward);
+    const newPartnership = await createPartnershipService(partnershipOne);
+    const newReward = await createRewardService(reward);
   });
 
   afterAll(async () => {
@@ -49,7 +50,7 @@ describe("Create a Partnerships", () => {
   });
 
   test("Should be able to create a new partnership.", async () => {
-    const createPartnership = await partnershipCreateService(partnershipTwo);
+    const createPartnership = await createPartnershipService(partnershipTwo);
 
     expect(createPartnership).toHaveProperty("id");
     expect(createPartnership).toHaveProperty("name");
@@ -61,14 +62,14 @@ describe("Create a Partnerships", () => {
   });
 
   test("Should be able to list all Partnerships.", async () => {
-    const listPartinerships = await partinershipsListService();
+    const listPartinerships = await listPartinershipsService();
 
     expect(listPartinerships).toHaveLength(2);
     expect(Array.isArray(listPartinerships)).toBeTruthy();
   });
 
   test("Should be able to list one Partinership", async () => {
-    const listOnePartnership = await partnershipListOneService("1");
+    const listOnePartnership = await listOnePartnershipService("1");
 
     expect(listOnePartnership).toHaveProperty("id");
     expect(listOnePartnership).toHaveProperty("name");
@@ -79,7 +80,7 @@ describe("Create a Partnerships", () => {
   });
 
   test("Should be able to update a partnership", async () => {
-    const updatePartnership = await partnershipUpdateOneService({
+    const updatePartnership = await editOnePartnershipService({
       partnership_id: "1",
       name: "Prata",
       price: 100.0,
@@ -93,7 +94,7 @@ describe("Create a Partnerships", () => {
   });
 
   test("Should be able to delete a Partnership.", async () => {
-    const partnership = await partnershipDeleteOneService("1");
+    const partnership = await deleteOnePartnershipService("1");
 
     expect(partnership).toBeTruthy();
   });
@@ -130,7 +131,7 @@ describe("Unitary Create User Service on Fail", () => {
         console.error("Error during data source initialization", err)
       );
 
-    const newReward = await rewardCreateService(reward);
+    const newReward = await createRewardService(reward);
   });
 
   afterAll(async () => {
@@ -138,10 +139,10 @@ describe("Unitary Create User Service on Fail", () => {
   });
 
   it("Should throw errConflict for registering a repeated Partnership.", async () => {
-    const newPartnership = await partnershipCreateService(partnershipOne);
+    const newPartnership = await createPartnershipService(partnershipOne);
 
     try {
-      await partnershipCreateService(partnershipOne);
+      await createPartnershipService(partnershipOne);
     } catch (e) {
       expect(e).toMatchObject(errConflict);
     }
@@ -149,7 +150,7 @@ describe("Unitary Create User Service on Fail", () => {
 
   it("Should throw errNotFound for listOne a unexisting Partnership.", async () => {
     try {
-      await partnershipListOneService("100");
+      await listOnePartnershipService("100");
     } catch (e) {
       expect(e).toMatchObject(errNotFound);
     }
@@ -157,7 +158,7 @@ describe("Unitary Create User Service on Fail", () => {
 
   it("Should throw errConflict for update a repeated Partnership.", async () => {
     try {
-      await partnershipUpdateOneService({
+      await editOnePartnershipService({
         partnership_id: "1",
         name: "Prata",
         price: 100.0,
@@ -170,7 +171,7 @@ describe("Unitary Create User Service on Fail", () => {
 
   it("Should throw errNotFound for update a unexisting Partnership.", async () => {
     try {
-      await partnershipUpdateOneService({
+      await editOnePartnershipService({
         partnership_id: "100",
         name: "Prata",
         price: 100.0,
@@ -183,7 +184,7 @@ describe("Unitary Create User Service on Fail", () => {
 
   it("Should throw errNotFound for delete a unexisting Partnership.", async () => {
     try {
-      await partnershipDeleteOneService("100");
+      await deleteOnePartnershipService("100");
     } catch (e) {
       expect(e).toMatchObject(errNotFound);
     }

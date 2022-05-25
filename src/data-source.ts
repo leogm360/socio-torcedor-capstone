@@ -5,17 +5,11 @@ import "dotenv/config";
 export const AppDataSource =
   process.env.NODE_ENV === "test"
     ? new DataSource({
-        type: "postgres",
-        host: "localhost",
-        username: process.env.POSTGRES_TEST_USER,
-        database: process.env.POSTGRES_TEST_DB,
-        password: process.env.POSTGRES_TEST_PWD,
-        port: 5432,
+        type: "sqlite",
+        database: ":memory:",
         entities: ["src/entities/*.ts"],
-        migrations: ["src/migrations/*.ts"],
-        synchronize: true,
-        dropSchema: true,
         logging: false,
+        synchronize: true,
       })
     : new DataSource({
         type: "postgres",
@@ -35,3 +29,15 @@ export const AppDataSource =
             ? ["dist/src/migrations/*.js"]
             : ["src/migrations/*.ts"],
       });
+
+// type: "postgres",
+//   host: "localhost",
+//   username: process.env.POSTGRES_TEST_USER,
+//   database: process.env.POSTGRES_TEST_DB,
+//   password: process.env.POSTGRES_TEST_PWD,
+//   port: 5432,
+//   entities: ["src/entities/*.ts"],
+//   migrations: ["src/migrations/*.ts"],
+//   logging: false,
+//   synchronize: true,
+//   dropSchema: true,

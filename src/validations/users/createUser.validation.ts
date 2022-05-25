@@ -26,12 +26,12 @@ const createUserSchema: SchemaOf<ICreateUser> = yup.object().shape({
     .min(6, "password must have at least 6 characters")
     .transform((password: string) => bcrypt.hashSync(password, 10)),
   age: yup.number().required("age is required"),
-  gender: yup.string().required(),
+  gender: yup.string().required("gender is required"),
   phone: yup.string().required("phone is required"),
   address: addressSchema,
-  clubId: yup.number().required("club_id is required"),
-  partnershipId: yup.number().required("partnership_id is required"),
-  isAdm: yup.boolean().required(),
+  clubId: yup.number().required("clubid is required"),
+  partnershipId: yup.number().required("partnershipId is required"),
+  isAdm: yup.boolean().required("isAdm is required"),
 });
 
 export default createUserSchema;

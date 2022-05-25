@@ -9,6 +9,7 @@
     "tsnode:start": "ts-node --files .",
     "tsnode:dev": "ts-node-dev --transpile-only --watch --ignore-watch node-modules .",
     "jest:test": "NODE_ENV=test jest",
+    "jest:verbose": "NODE_ENV=test jest --verbose",
     "jest:watch": "NODE_ENV=test jest --watch",
     "typeorm": "typeorm-ts-node-commonjs",
     "migrations": "chmod +x ./src/scripts/*.sh && ./src/scripts/typeorm-migrations.sh",

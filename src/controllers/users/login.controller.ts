@@ -8,6 +8,7 @@ const loginUserController = async (req: Request, res: Response) => {
   const token = await loginUserService({ email, userName, password });
 
   return res.status(200).json({
+    message: "Authenticated.",
     userToken: token,
   });
 };

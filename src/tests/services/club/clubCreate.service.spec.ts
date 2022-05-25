@@ -1,13 +1,15 @@
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import useError from "../../../hooks/useError";
-import clubCreateService from "../../../services/club/create.service";
-import clubUpdateOneService from "../../../services/club/updateOne.service";
-import clubDeleteOneService from "../../../services/club/deleteOne.service";
-import clubListService from "../../../services/club/list.service";
-import clubListOneService from "../../../services/club/listOne.service";
+import {
+  createClubService,
+  listClubsService,
+  listOneClubService,
+  editOneClubService,
+  deleteOneClubService,
+} from "../../../services";
 
-describe("Unitary Create User Service on Success", () => {
+describe("Unitary Create Club Service on Success", () => {
   let connection: DataSource;
 
   const clubOne = {
@@ -24,14 +26,14 @@ describe("Unitary Create User Service on Success", () => {
       })
       .catch((e) => console.error("AppDataSource failed to connect: ", e));
 
-    const newClub = await clubCreateService(clubOne);
+    const newClub = await createClubService(clubOne);
   });
   afterAll(async () => {
     await connection.destroy();
   });
 
   test("Should be able to create a new Club.", async () => {
-    const club = await clubCreateService(clubTwo);
+    const club = await createClubService(clubTwo);
 
     expect(club).toHaveProperty("id");
     expect(club).toHaveProperty("name");
@@ -39,14 +41,14 @@ describe("Unitary Create User Service on Success", () => {
   });
 
   test("Should be able to list all Clubs.", async () => {
-    const listClubs = await clubListService();
+    const listClubs = await listClubsService();
 
     expect(listClubs).toHaveLength(2);
     expect(Array.isArray(listClubs)).toBeTruthy();
   });
 
   test("Should be able to list one Club.", async () => {
-    const listOneClub = await clubListOneService("1");
+    const listOneClub = await listOneClubService("1");
 
     expect(listOneClub).toHaveProperty("id");
     expect(listOneClub).toHaveProperty("name");
@@ -54,7 +56,7 @@ describe("Unitary Create User Service on Success", () => {
   });
 
   test("Should be able to update a Club.", async () => {
-    const club = await clubUpdateOneService({
+    const club = await editOneClubService({
       club_id: "1",
       name: "Corinthians FC",
     });
@@ -64,13 +66,13 @@ describe("Unitary Create User Service on Success", () => {
   });
 
   test("Should be able to delete a Club.", async () => {
-    const club = await clubDeleteOneService("1");
+    const club = await deleteOneClubService("1");
 
     expect(club).toBeTruthy();
   });
 });
 
-describe("Unitary Create User Service on Fail", () => {
+describe("Unitary Create Club Service on Fail", () => {
   let connection: DataSource;
 
   const { errConflict, errNotFound } = useError();
@@ -94,10 +96,10 @@ describe("Unitary Create User Service on Fail", () => {
   });
 
   it("Should throw errConflict for registering a repeated Club.", async () => {
-    const newClub = await clubCreateService(clubOne);
+    const newClub = await createClubService(clubOne);
 
     try {
-      await clubCreateService(clubOne);
+      await createClubService(clubOne);
     } catch (e) {
       expect(e).toMatchObject(errConflict);
     }
@@ -105,7 +107,7 @@ describe("Unitary Create User Service on Fail", () => {
 
   it("Should throw errNotFound for listOne a unexisting Club.", async () => {
     try {
-      await clubListOneService("100");
+      await listOneClubService("100");
     } catch (e) {
       expect(e).toMatchObject(errNotFound);
     }
@@ -113,7 +115,7 @@ describe("Unitary Create User Service on Fail", () => {
 
   it("Should throw errConflict for update a repeated Club.", async () => {
     try {
-      await clubUpdateOneService({
+      await editOneClubService({
         club_id: "1",
         name: "São Paulo FC",
       });
@@ -124,7 +126,7 @@ describe("Unitary Create User Service on Fail", () => {
 
   it("Should throw errNotFound for update a unexisting Club.", async () => {
     try {
-      await clubUpdateOneService({
+      await editOneClubService({
         club_id: "100",
         name: "São Paulo FC",
       });
@@ -135,7 +137,7 @@ describe("Unitary Create User Service on Fail", () => {
 
   it("Should throw errNotFound for delete a unexisting Club.", async () => {
     try {
-      await clubDeleteOneService("100");
+      await deleteOneClubService("100");
     } catch (e) {
       expect(e).toMatchObject(errNotFound);
     }

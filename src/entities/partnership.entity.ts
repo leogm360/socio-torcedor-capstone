@@ -8,11 +8,10 @@ import {
   ManyToMany,
   JoinTable,
 } from "typeorm";
-import { Reward } from "./reward.entity";
-import { User } from "./user.entity";
+import { User, Reward } from "./";
 
 @Entity("partnerships")
-export class Partnership {
+class Partnership {
   @PrimaryGeneratedColumn("increment")
   readonly id: number;
 
@@ -35,3 +34,5 @@ export class Partnership {
   @UpdateDateColumn()
   readonly update_at: Date;
 }
+
+export default Partnership;

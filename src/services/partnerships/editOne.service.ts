@@ -19,8 +19,6 @@ const editOnePartnershipService = async ({
     (partnership) => partnership.id.toString() === partnership_id
   );
 
-  console.log(partnership?.rewards);
-
   if (!partnership) throw errNotFound;
 
   let listRewards: Reward[] = partnership.rewards;

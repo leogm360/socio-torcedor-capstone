@@ -1,9 +1,9 @@
 import * as yup from "yup";
 import bcrypt from "bcrypt";
 import { SchemaOf } from "yup";
-import { ICreateUser, IAdress } from "../../interfaces/users";
+import { ICreateUser, IAddress } from "../../interfaces/users";
 
-const addressSchema: SchemaOf<IAdress> = yup.object().shape({
+const addressSchema: SchemaOf<IAddress> = yup.object().shape({
   zip_code: yup
     .string()
     .required("zip code is required")

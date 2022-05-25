@@ -8,5 +8,11 @@ export interface IUpdatePartnership {
   partnership_id: string;
   name: string;
   price: number;
-  rewards_id: [];
+  rewards_id: number[];
+}
+
+export interface IUpdatePartnershipSchema {
+  name?: string;
+  price?: string;
+  rewards_id?: array;
 }

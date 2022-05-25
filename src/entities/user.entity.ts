@@ -7,13 +7,12 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { Address } from "./address.entity";
-import { Club } from "./club.entity";
-import { Partnership } from "./partnership.entity";
+import { Address, Club, Partnership } from "./";
+
 import { v4 as uuid } from "uuid";
 
 @Entity("users")
-export class User {
+class User {
   @PrimaryColumn("uuid")
   readonly id: string;
 
@@ -74,3 +73,5 @@ export class User {
     }
   }
 }
+
+export default User;

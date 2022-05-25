@@ -1,7 +1,7 @@
 import useRepo from "../../hooks/useRepo";
 import useError from "../../hooks/useError";
 
-const partnershipDeleteOneService = async (partnership_id: String) => {
+const deleteOnePartnershipService = async (partnership_id: String) => {
   const { partnerships } = useRepo();
   const { errNotFound } = useError();
 
@@ -18,4 +18,4 @@ const partnershipDeleteOneService = async (partnership_id: String) => {
   return true;
 };
 
-export default partnershipDeleteOneService;
+export default deleteOnePartnershipService;

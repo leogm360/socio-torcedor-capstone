@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 
 @Entity("rewards")
-export class Reward {
+class Reward {
   @PrimaryGeneratedColumn("increment")
   readonly id: number;
 
@@ -23,3 +23,5 @@ export class Reward {
   @UpdateDateColumn()
   readonly update_at: Date;
 }
+
+export default Reward;

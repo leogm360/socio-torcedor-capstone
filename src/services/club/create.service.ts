@@ -3,13 +3,12 @@ import useError from "../../hooks/useError";
 import { IClubCreate } from "../../interfaces/club";
 import { Club } from "../../entities";
 
-const clubCreateService = async ({ name }: IClubCreate) => {
+const createClubService = async ({ name }: IClubCreate) => {
   const { clubs } = useRepo();
   const { errConflict } = useError();
 
-  const ClubAlreadyExists = await clubs.findOneBy({
-    name: name,
-  });
+  const ClubAlreadyExists = await clubs.findOneBy({ name });
+
   if (ClubAlreadyExists) throw errConflict;
 
   const newClub = new Club();
@@ -21,4 +20,4 @@ const clubCreateService = async ({ name }: IClubCreate) => {
   return newClub;
 };
 
-export default clubCreateService;
+export default createClubService;

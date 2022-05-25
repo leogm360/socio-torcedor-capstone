@@ -1,6 +1,4 @@
 import { Router } from "express";
-import { expressYupMiddleware } from "express-yup-middleware";
-
 import {
   createUserController,
   loginUserController,
@@ -11,16 +9,19 @@ import {
   editMeUserController,
   deleteOneUserController,
   deleteMeUserController,
-} from "../controllers/users";
-import { checkAuthUserMiddleware } from "../middlewares/checks";
-import createUserSchema from "../validations/users/createUser.validation";
+} from "../controllers";
+import {
+  checkAuthUserMiddleware,
+  checkCreateUserMiddleware,
+} from "../middlewares";
+import { createUserSchema } from "../validations";
 
 const routes = Router();
 
 const userRoutes = () => {
   routes.post(
     "/",
-    expressYupMiddleware({ schemaValidator: createUserSchema }),
+    checkCreateUserMiddleware(createUserSchema),
     createUserController
   );
   routes.post("/login", loginUserController);

@@ -1,4 +1,4 @@
-interface IAdress {
+export interface IAdress {
   zip_code: string;
   street: string;
   number_house: string;
@@ -23,8 +23,8 @@ export interface ICreateUser {
 }
 
 export interface ILoginUser {
-  email: string;
-  userName: string;
+  email?: string;
+  userName?: string;
   password: string;
 }
 

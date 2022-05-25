@@ -1,7 +1,7 @@
 import useRepo from "../../hooks/useRepo";
 import useError from "../../hooks/useError";
 
-const clubDeleteOneService = async (club_id: String) => {
+const deleteOneClubService = async (club_id: String) => {
   const { clubs } = useRepo();
   const { errNotFound } = useError();
 
@@ -16,4 +16,4 @@ const clubDeleteOneService = async (club_id: String) => {
   return true;
 };
 
-export default clubDeleteOneService;
+export default deleteOneClubService;

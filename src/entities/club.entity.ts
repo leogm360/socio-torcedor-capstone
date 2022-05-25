@@ -6,10 +6,10 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from "typeorm";
-import { User } from "./user.entity";
+import { User } from "./";
 
 @Entity("clubs")
-export class Club {
+class Club {
   @PrimaryGeneratedColumn("increment")
   readonly id: number;
 
@@ -25,3 +25,5 @@ export class Club {
   @OneToMany((type) => User, (user) => user.club)
   users: User[];
 }
+
+export default Club;

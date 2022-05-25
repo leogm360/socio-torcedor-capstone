@@ -1,21 +1,10 @@
 import { Request, Response } from "express";
-
-import rewardListService from "../../services/rewards/list.service";
+import { listRewardsService } from "../../services";
 
 const listRewardsController = async (req: Request, res: Response) => {
-  try {
-    const rewards = await rewardListService();
+  const rewards = await listRewardsService();
 
-    return res.status(200).json(rewards);
-  } catch (err: any) {
-    const { statusCode, message } = err;
-
-    return res.status(statusCode).send({
-      status: "err",
-      statusCode,
-      message,
-    });
-  }
+  return res.status(200).json(rewards);
 };
 
 export default listRewardsController;

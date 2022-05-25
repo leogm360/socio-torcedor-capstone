@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import createUserService from "../../services/users/create.service";
+import { createUserService } from "../../services";
 
 const createUserController = async (req: Request, res: Response) => {
   const {
@@ -14,7 +14,7 @@ const createUserController = async (req: Request, res: Response) => {
     address,
     partnershipId,
     clubId,
-  } = req.body;
+  } = req.newUser;
 
   const user = await createUserService({
     name,

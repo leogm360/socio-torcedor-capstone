@@ -1,7 +1,5 @@
-import { Address } from "./address.entity";
-import { Club } from "./club.entity";
-import { Partnership } from "./partnership.entity";
-import { Reward } from "./reward.entity";
-import { User } from "./user.entity";
-
-export { Address, Club, Partnership, Reward, User };
+export { default as User } from "./user.entity";
+export { default as Address } from "./address.entity";
+export { default as Partnership } from "./partnership.entity";
+export { default as Reward } from "./reward.entity";
+export { default as Club } from "./club.entity";

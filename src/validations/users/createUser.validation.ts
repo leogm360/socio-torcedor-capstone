@@ -1,6 +1,7 @@
 import * as yup from "yup";
 import bcrypt from "bcrypt";
 import { SchemaOf } from "yup";
+
 import { ICreateUser, IAddress } from "../../interfaces/users";
 
 const addressSchema: SchemaOf<IAddress> = yup.object().shape({

@@ -1,6 +1,7 @@
 import { Club, Partnership } from "../../entities";
 
 export interface IAddress {
+
   zip_code: string;
   street: string;
   number_house: string;

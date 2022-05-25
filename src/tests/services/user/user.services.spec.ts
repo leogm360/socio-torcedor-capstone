@@ -21,6 +21,7 @@ import { User, Address, Club, Partnership } from "../../../entities";
 jest.mock("uuid");
 
 const { users, clubs, partnerships } = useRepo();
+
 const { errNotFound, errConflict } = useError();
 
 const nameOne = "Test User One";
@@ -112,6 +113,7 @@ describe("Unitary User Services on Success", () => {
 
   it("Should be able create an User with an unexisting address.", async () => {
     const uuidSpy = jest.spyOn(uuid, "v4");
+
     uuidSpy.mockReturnValueOnce("8575e51f-2d48-4297-be3f-c59931638544");
 
     userOne.password = await bcrypt.hash(userOne.password, 10);
@@ -144,6 +146,7 @@ describe("Unitary User Services on Success", () => {
 
   it("Should be able create an User within an existing address.", async () => {
     const uuidSpy = jest.spyOn(uuid, "v4");
+
     uuidSpy.mockReturnValueOnce("8575e51f-2d48-4297-be3f-c59931638545");
 
     userTwo.password = await bcrypt.hash(userTwo.password, 10);
@@ -441,6 +444,7 @@ describe("Unitary User Services on Fail", () => {
     await connection.destroy();
   });
 
+
   it("Should throw errConflict for creating a repeated User.", async () => {
     const uuidSpy = jest.spyOn(uuid, "v4");
 
@@ -451,18 +455,22 @@ describe("Unitary User Services on Fail", () => {
 
     await partnerships.save(newPartnership);
 
+
     uuidSpy.mockReturnValueOnce("8575e51f-2d48-4297-be3f-c59931638544");
     await createUserService(userOne);
 
     try {
       uuidSpy.mockReturnValueOnce("8575e51f-2d48-4297-be3f-c59931638545");
+      
       await createUserService(userOne);
     } catch (e) {
       expect(e).toMatchObject(errConflict);
     }
   });
 
+
   it("Should throw errNotFound for creating an User with an unexisting Club.", async () => {
+
     const newPartnership = partnerships.create(partnership);
 
     await partnerships.save(newPartnership);
@@ -474,7 +482,9 @@ describe("Unitary User Services on Fail", () => {
     }
   });
 
+
   it("Should throw errNotFound for creating an User with an unexisting Partnership.", async () => {
+
     const newClub = clubs.create(club);
 
     await clubs.save(newClub);
@@ -485,6 +495,7 @@ describe("Unitary User Services on Fail", () => {
       expect(e).toMatchObject(errNotFound);
     }
   });
+
 
   it("Should throw errNotFound for listing an User with a wrong/unexisting id.", async () => {
     try {

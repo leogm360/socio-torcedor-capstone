@@ -1680,3 +1680,23 @@ Vazio
 
 ## 6. Testes
 [ Voltar para o topo ](#tabela-de-conteúdos)
+
+Foram desenvolvidos mais de 100 testes para verificar a execução de todas as rotas e requisições.
+
+Para executar os testes, execute o seguinte comando: 
+
+```
+yarn jest:verbose
+```
+
+Em caso de sucesso em todos os testes, será apresentada uma lista com descrição de todos os testes e o resultado deve ser similar a este:
+
+```
+Test Suites: 8 passed, 8 total
+Tests:       101 passed, 101 total
+Snapshots:   0 total
+Time:        25.966 s
+Ran all test suites.
+Done in 28.36s.
+```
+

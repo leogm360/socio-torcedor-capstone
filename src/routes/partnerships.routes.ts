@@ -11,12 +11,18 @@ import {
   createPartnershipSchema,
   updatePartnershipSchema,
 } from "../validations";
+import {
+  checkAuthUserMiddleware,
+  checkIsAdminMiddleWare,
+} from "../middlewares";
 
 const routes = Router();
 
 const partnershipsRoutes = () => {
+  routes.use("/", checkAuthUserMiddleware);
   routes.post(
     "/",
+    checkIsAdminMiddleWare,
     expressYupMiddleware({ schemaValidator: createPartnershipSchema }),
     createPartnershipController
   );
@@ -25,10 +31,15 @@ const partnershipsRoutes = () => {
   routes.get("/:partnership_id", listOnePartnershipController);
   routes.patch(
     "/:partnership_id",
+    checkIsAdminMiddleWare,
     expressYupMiddleware({ schemaValidator: updatePartnershipSchema }),
     editOnePartnershipController
   );
-  routes.delete("/:partnership_id", deleteOnePartnershipController);
+  routes.delete(
+    "/:partnership_id",
+    checkIsAdminMiddleWare,
+    deleteOnePartnershipController
+  );
 
   return routes;
 };

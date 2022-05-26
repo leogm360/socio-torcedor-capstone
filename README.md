@@ -288,7 +288,7 @@ OBS.: Chaves não presentes no schema serão removidas.
 ### Exemplo de Request:
 ```
 GET /users/login
-Host: 
+Host: https://socio-torcedor-api-capstone-m4.herokuapp.com/
 Authorization: None
 Content-type: application/json
 ```
@@ -296,7 +296,7 @@ Content-type: application/json
 ### Corpo da Requisição:
 ```json
 {
-	"user_name": "leo360",
+	"userName": "leo360",
 	"password": "123456789",
 }
 ou
@@ -312,8 +312,8 @@ ou
 ```
 ```json
 	{
-		"message": "User logged in.",
-		"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+		"message": "Authenticated.",
+		"userToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 	}
 ```
 
@@ -321,7 +321,7 @@ ou
 | Código do Erro | Descrição |
 |----------------|-----------|
 | 404 Not Found   | Resource not found. |
-| 401 Unauthorized| User/password is invalid. |
+| 401 Unauthorized| Unauthorized, user credentials are invalid. |
 
 
 ---
@@ -335,7 +335,7 @@ ou
 ### Exemplo de Request:
 ```
 GET /users
-Host: **********
+Host: https://socio-torcedor-api-capstone-m4.herokuapp.com/
 Authorization: token, isAdm
 Content-type: application/json
 ```
@@ -352,29 +352,51 @@ Vazio
 ```json
 [
   {
-  "id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
-  "name": "Leonardo Moraes",
-  "user_name": "leo360",
-  "email": "leonardo@email.com",
-  "age": 20,
-  "gender": "Masculino",
-  "phone": "99123456789",
-  "address":{
-    "zip_code":"12345678",
-    "street": "Rua sete de setembro",
-    "number": 26,
-    "complement": "Prédio",
-    "city": "Rio de Janeiro",
-    "state": "RJ",
-    "country": "Brasil",
-    "created_at": "2022-05-15 16:29:51.350149",
-    "updated_at": "2022-05-15 16:29:51.350149"
-  } 
-  "is_adm": true,
-  "partnership": 1,
-  "created_at": "2022-05-15 16:29:51.350149",
-  "updated_at": "2022-05-15 16:29:51.350149"
-  }
+		"id": "670452c8-b349-4b54-b9e4-fff462568103",
+		"name": "Leonardo Moraes",
+		"userName": "leo36",
+		"email": "leonardo@email.com",
+		"age": 32,
+		"gender": "male",
+		"phone": "123456789",
+		"isAdm": false,
+		"created_at": "2022-05-26T12:59:20.800Z",
+		"update_at": "2022-05-26T12:59:20.800Z",
+		"address": {
+			"id": 70,
+			"zip_code": "12345678",
+			"street": "Rua sete de setembro",
+			"number_house": "26",
+			"complement": "Prédio",
+			"city": "Rio de Janeiro",
+			"state": "RJ",
+			"country": "Brasil",
+			"created_at": "2022-05-26T12:59:20.800Z",
+			"updated_at": "2022-05-26T12:59:20.800Z"
+		},
+		"partnership": {
+			"id": 4,
+			"name": "Gold",
+			"price": 99.9,
+			"created_at": "2022-05-26T12:57:23.240Z",
+			"update_at": "2022-05-26T12:57:23.240Z",
+			"rewards": [
+				{
+					"id": 3,
+					"name": "Desconto ingressos 20",
+					"description": "20% de desconto em ingressos",
+					"created_at": "2022-05-25T16:02:50.918Z",
+					"update_at": "2022-05-25T16:02:50.918Z"
+				}
+			]
+		},
+		"club": {
+			"id": 2,
+			"name": "Fluminense",
+			"created_at": "2022-05-25T16:02:08.090Z",
+			"update_at": "2022-05-25T16:02:08.090Z"
+		}
+	}
 ]
 ```
 
@@ -394,8 +416,8 @@ Vazio
 
 ### Exemplo de Request:
 ```
-GET /users/9cda28c9-e540-4b2c-bf0c-c90006d37893
-Host: **********
+GET /users/670452c8-b349-4b54-b9e4-fff462568103
+Host: https://socio-torcedor-api-capstone-m4.herokuapp.com/
 Authorization: token, isAdm
 Content-type: application/json
 ```
@@ -415,37 +437,59 @@ Vazio
 200 OK
 ```
 ```json
-  {
-  "id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
-  "name": "Leonardo Moraes",
-  "user_name": "leo360",
-  "email": "leonardo@email.com",
-  "age": 20,
-  "gender": "Masculino",
-  "phone": "99123456789",
-  "address":{
-    "zip_code":"12345678",
-    "street": "Rua sete de setembro",
-    "number": 26,
-    "complement": "Prédio",
-    "city": "Rio de Janeiro",
-    "state": "RJ",
-    "country": "Brasil",
-    "created_at": "2022-05-15 16:29:51.350149",
-    "updated_at": "2022-05-15 16:29:51.350149"
-  } 
-  "is_adm": true,
-  "partnership": 1,
-  "created_at": "2022-05-15 16:29:51.350149",
-  "updated_at": "2022-05-15 16:29:51.350149"
-  }
+ {
+	"id": "670452c8-b349-4b54-b9e4-fff462568103",
+	"name": "Leonardo Moraes",
+	"userName": "leo36",
+	"email": "leonardo@email.com",
+	"age": 32,
+	"gender": "male",
+	"phone": "123456789",
+	"isAdm": false,
+	"created_at": "2022-05-26T12:59:20.800Z",
+	"update_at": "2022-05-26T12:59:20.800Z",
+	"address": {
+		"id": 70,
+		"zip_code": "12345678",
+		"street": "Rua sete de setembro",
+		"number_house": "26",
+		"complement": "Prédio",
+		"city": "Rio de Janeiro",
+		"state": "RJ",
+		"country": "Brasil",
+		"created_at": "2022-05-26T12:59:20.800Z",
+		"updated_at": "2022-05-26T12:59:20.800Z"
+	},
+	"partnership": {
+		"id": 4,
+		"name": "Gold",
+		"price": 99.9,
+		"created_at": "2022-05-26T12:57:23.240Z",
+		"update_at": "2022-05-26T12:57:23.240Z",
+		"rewards": [
+			{
+				"id": 3,
+				"name": "Desconto ingressos 20",
+				"description": "20% de desconto em ingressos",
+				"created_at": "2022-05-25T16:02:50.918Z",
+				"update_at": "2022-05-25T16:02:50.918Z"
+			}
+		]
+	},
+	"club": {
+		"id": 2,
+		"name": "Fluminense",
+		"created_at": "2022-05-25T16:02:08.090Z",
+		"update_at": "2022-05-25T16:02:08.090Z"
+	}
+}
 ```
 
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
 | 403 Forbidden   | User must be an admin to access this resource. |
-| 404 Not Found   | User not found. |
+| 404 Not Found   | Resource not found. |
 
 ---
 
@@ -458,7 +502,7 @@ Vazio
 ### Exemplo de Request:
 ```
 GET /users/me
-Host: **********
+Host: https://socio-torcedor-api-capstone-m4.herokuapp.com/
 Authorization: token
 Content-type: application/json
 ```
@@ -478,36 +522,58 @@ Vazio
 200 OK
 ```
 ```json
-  {
-  "id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
-  "name": "Leonardo Moraes",
-  "user_name": "leo360",
-  "email": "leonardo@email.com",
-  "age": 20,
-  "gender": "Masculino",
-  "phone": "99123456789",
-  "address":{
-    "zip_code":"12345678",
-    "street": "Rua sete de setembro",
-    "number": 26,
-    "complement": "Prédio",
-    "city": "Rio de Janeiro",
-    "state": "RJ",
-    "country": "Brasil",
-    "created_at": "2022-05-15 16:29:51.350149",
-    "updated_at": "2022-05-15 16:29:51.350149"
-  } 
-  "is_adm": true,
-  "partnership": 1,
-  "created_at": "2022-05-15 16:29:51.350149",
-  "updated_at": "2022-05-15 16:29:51.350149"
-  }
+{
+	"id": "670452c8-b349-4b54-b9e4-fff462568103",
+	"name": "Leonardo Moraes",
+	"userName": "leo36",
+	"email": "leonardo@email.com",
+	"age": 32,
+	"gender": "male",
+	"phone": "123456789",
+	"isAdm": false,
+	"created_at": "2022-05-26T12:59:20.800Z",
+	"update_at": "2022-05-26T12:59:20.800Z",
+	"address": {
+		"id": 70,
+		"zip_code": "12345678",
+		"street": "Rua sete de setembro",
+		"number_house": "26",
+		"complement": "Prédio",
+		"city": "Rio de Janeiro",
+		"state": "RJ",
+		"country": "Brasil",
+		"created_at": "2022-05-26T12:59:20.800Z",
+		"updated_at": "2022-05-26T12:59:20.800Z"
+	},
+	"partnership": {
+		"id": 4,
+		"name": "Gold",
+		"price": 99.9,
+		"created_at": "2022-05-26T12:57:23.240Z",
+		"update_at": "2022-05-26T12:57:23.240Z",
+		"rewards": [
+			{
+				"id": 3,
+				"name": "Desconto ingressos 20",
+				"description": "20% de desconto em ingressos",
+				"created_at": "2022-05-25T16:02:50.918Z",
+				"update_at": "2022-05-25T16:02:50.918Z"
+			}
+		]
+	},
+	"club": {
+		"id": 2,
+		"name": "Fluminense",
+		"created_at": "2022-05-25T16:02:08.090Z",
+		"update_at": "2022-05-25T16:02:08.090Z"
+	}
+}
 ```
 
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 403 Forbidden   | User cannot access this resource. |
+| 401 Unauthorized   | Unauthorized, authorization token missing/invalid. |
 
 ---
 
@@ -518,8 +584,8 @@ Vazio
 
 ### Exemplo de Request:
 ```
-PATCH /users/9cda28c9-e540-4b2c-bf0c-c90006d37893
-Host: **********
+PATCH /users/670452c8-b349-4b54-b9e4-fff462568103
+Host: https://socio-torcedor-api-capstone-m4.herokuapp.com/
 Authorization: token, isAdm
 Content-type: application/json
 ```
@@ -531,8 +597,10 @@ Content-type: application/json
 
 ### Corpo da Requisição:
 ```json
+{
   "name": "Leonardo Moraes de Almeida",
-  "age": 45,
+  "age": 45
+}
 ```
 
 ### Exemplo de Response:
@@ -541,29 +609,51 @@ Content-type: application/json
 ```
 ```json
   {
-  "id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
-  "name": "Leonardo Moraes de Almeida",
-  "user_name": "leo360",
-  "email": "leonardo@email.com",
-  "age": 45,
-  "gender": "Masculino",
-  "phone": "99123456789",
-  "address":{
-    "zip_code":"12345678",
-    "street": "Rua sete de setembro",
-    "number": 26,
-    "complement": "Prédio",
-    "city": "Rio de Janeiro",
-    "state": "RJ",
-    "country": "Brasil",
-    "created_at": "2022-05-15 16:29:51.350149",
-    "updated_at": "2022-05-15 16:29:51.350149"
-  } 
-  "is_adm": true,
-  "partnership": 1,
-  "created_at": "2022-05-15 16:29:51.350149",
-  "updated_at": "2022-05-25 18:20:21.305144"
-  }
+	"id": "670452c8-b349-4b54-b9e4-fff462568103",
+	"name": "Leonardo Moraes de Almeida",
+	"userName": "leo36",
+	"email": "leonardo@email.com",
+	"age": 45,
+	"gender": "male",
+	"phone": "123456789",
+	"isAdm": false,
+	"created_at": "2022-05-26T12:59:20.800Z",
+	"update_at": "2022-05-26T12:59:20.800Z",
+	"address": {
+		"id": 70,
+		"zip_code": "12345678",
+		"street": "Rua sete de setembro",
+		"number_house": "26",
+		"complement": "Prédio",
+		"city": "Rio de Janeiro",
+		"state": "RJ",
+		"country": "Brasil",
+		"created_at": "2022-05-26T12:59:20.800Z",
+		"updated_at": "2022-05-26T12:59:20.800Z"
+	},
+	"partnership": {
+		"id": 4,
+		"name": "Gold",
+		"price": 99.9,
+		"created_at": "2022-05-26T12:57:23.240Z",
+		"update_at": "2022-05-26T12:57:23.240Z",
+		"rewards": [
+			{
+				"id": 3,
+				"name": "Desconto ingressos 20",
+				"description": "20% de desconto em ingressos",
+				"created_at": "2022-05-25T16:02:50.918Z",
+				"update_at": "2022-05-25T16:02:50.918Z"
+			}
+		]
+	},
+	"club": {
+		"id": 2,
+		"name": "Fluminense",
+		"created_at": "2022-05-25T16:02:08.090Z",
+		"update_at": "2022-05-25T16:02:08.090Z"
+	}
+}
 ```
 
 ### Possíveis Erros:
@@ -584,7 +674,7 @@ Content-type: application/json
 ### Exemplo de Request:
 ```
 PATCH /users/me
-Host: **********
+Host: https://socio-torcedor-api-capstone-m4.herokuapp.com/
 Authorization: token
 Content-type: application/json
 ```
@@ -597,7 +687,7 @@ Content-type: application/json
 ### Corpo da Requisição:
 ```json
   "name": "Leonardo Moraes de Almeida",
-  "age": 45,
+  "age": 45
 ```
 
 ### Exemplo de Response:
@@ -605,30 +695,52 @@ Content-type: application/json
 200 OK
 ```
 ```json
-  {
-  "id": "9cda28c9-e540-4b2c-bf0c-c90006d37893",
-  "name": "Leonardo Moraes de Almeida",
-  "user_name": "leo360",
-  "email": "leonardo@email.com",
-  "age": 45,
-  "gender": "Masculino",
-  "phone": "99123456789",
-  "address":{
-    "zip_code":"12345678",
-    "street": "Rua sete de setembro",
-    "number": 26,
-    "complement": "Prédio",
-    "city": "Rio de Janeiro",
-    "state": "RJ",
-    "country": "Brasil",
-    "created_at": "2022-05-15 16:29:51.350149",
-    "updated_at": "2022-05-15 16:29:51.350149"
-  } 
-  "is_adm": true,
-  "partnership": 1,
-  "created_at": "2022-05-15 16:29:51.350149",
-  "updated_at": "2022-05-25 18:20:21.305144"
-  }
+ {
+	"id": "670452c8-b349-4b54-b9e4-fff462568103",
+	"name": "Leonardo Moraes de Almeida",
+	"userName": "leo36",
+	"email": "leonardo@email.com",
+	"age": 45,
+	"gender": "male",
+	"phone": "123456789",
+	"isAdm": false,
+	"created_at": "2022-05-26T12:59:20.800Z",
+	"update_at": "2022-05-26T12:59:20.800Z",
+	"address": {
+		"id": 70,
+		"zip_code": "12345678",
+		"street": "Rua sete de setembro",
+		"number_house": "26",
+		"complement": "Prédio",
+		"city": "Rio de Janeiro",
+		"state": "RJ",
+		"country": "Brasil",
+		"created_at": "2022-05-26T12:59:20.800Z",
+		"updated_at": "2022-05-26T12:59:20.800Z"
+	},
+	"partnership": {
+		"id": 4,
+		"name": "Gold",
+		"price": 99.9,
+		"created_at": "2022-05-26T12:57:23.240Z",
+		"update_at": "2022-05-26T12:57:23.240Z",
+		"rewards": [
+			{
+				"id": 3,
+				"name": "Desconto ingressos 20",
+				"description": "20% de desconto em ingressos",
+				"created_at": "2022-05-25T16:02:50.918Z",
+				"update_at": "2022-05-25T16:02:50.918Z"
+			}
+		]
+	},
+	"club": {
+		"id": 2,
+		"name": "Fluminense",
+		"created_at": "2022-05-25T16:02:08.090Z",
+		"update_at": "2022-05-25T16:02:08.090Z"
+	}
+}
 ```
 
 ### Possíveis Erros:
@@ -648,8 +760,8 @@ Content-type: application/json
 
 ### Exemplo de Request:
 ```
-DELETE /users/9cda28c9-e540-4b2c-bf0c-c90006d37893
-Host: **********
+DELETE /users/670452c8-b349-4b54-b9e4-fff462568103
+Host: https://socio-torcedor-api-capstone-m4.herokuapp.com/
 Authorization: token, isAdm
 Content-type: application/json
 ```
@@ -676,7 +788,7 @@ Vazio
 | Código do Erro | Descrição |
 |----------------|-----------|
 | 403 Forbidden   | User cannot access this resource.  |
-| 404 Not Found   | User not found. 		       |
+| 404 Not Found   | Resource not found.		       |
 
 ---
 
@@ -688,7 +800,7 @@ Vazio
 ### Exemplo de Request:
 ```
 DELETE /users/me
-Host: **********
+Host: https://socio-torcedor-api-capstone-m4.herokuapp.com/
 Authorization: token, isAdm
 Content-type: application/json
 ```
@@ -714,7 +826,7 @@ Vazio
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 403 Forbidden   | User cannot access this resource.  |
+| 401 Unauthorized| Unauthorized, authorization token missing/invalid.  |
 
 ---
 

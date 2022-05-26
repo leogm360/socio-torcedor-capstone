@@ -1480,28 +1480,7 @@ Content-type: application/json
 ```javascript
 
 *****EXEMPLO*****
-name: yup
-        .string()
-	.required()
-	.transform((value, originalValue) => { 
-		return titlelify(originalValue) 
-	}),
-email: yup
-        .string()
-	.email()
-	.required()
-	.transform((value, originalValue) => { 
-		return originalValue.toLowerCase() 
-	}),
-password: yup
-        .string()
-	.required()
-	.transform((value, originalValue) => { 
-		return bcrypt.hashSync(originalValue, 10) 
-	}),
-isAdm: yup
-        .boolean()
-	.required(),
+name: yup.string().required("name is required"),
 ```
 OBS.: Chaves não presentes no schema serão removidas.
 
@@ -1587,9 +1566,9 @@ Content-type: application/json
 ```
 
 ### Parâmetros da Requisição:
-| Parâmetro      | Tipo        | Descrição                            |
-|----------------|-------------|--------------------------------------|
-| clubs_id       | string      | Identificador único do clube (Club)  |
+| Parâmetro     | Tipo        | Descrição                            |
+|---------------|-------------|--------------------------------------|
+| club_id       | string      | Identificador único do clube (Club)  |
 
 ### Corpo da Requisição:
 ```json
@@ -1657,9 +1636,9 @@ Content-type: application/json
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 403 Forbidden   | User cannot access this resource 				   |
-| 404 Not Found   | Resource not found 						   |
-| 400 Bad Request | Requisition body must have at least one property to be updated |
+| 403 Forbidden   | User cannot access this resource 	 |
+| 404 Not Found   | Resource not found 			 |
+| 400 Bad Request | Name is required			 |
 
 
 ---
@@ -1677,9 +1656,9 @@ Content-type: application/json
 ```
 
 ### Parâmetros da Requisição:
-| Parâmetro   | Tipo        | Descrição                             |
-|-------------|-------------|---------------------------------------|
-| clubs_id    | string      | Identificador único do clube (Club)  |
+| Parâmetro  | Tipo        | Descrição                            |
+|------------|-------------|--------------------------------------|
+| club_id    | string      | Identificador único do clube (Club)  |
 
 ### Corpo da Requisição:
 ```json
@@ -1697,8 +1676,8 @@ Vazio
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
-| 403 Forbidden   | User cannot access this resource.  |
-| 404 Not Found   | Resource not found		       |
+| 403 Forbidden  | User cannot access this resource. |
+| 404 Not Found  | Resource not found		     |
 
 ---
 

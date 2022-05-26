@@ -30,7 +30,7 @@ const createUserSchema: SchemaOf<ICreateUser> = yup.object().shape({
   gender: yup.string().required("gender is required"),
   phone: yup.string().required("phone is required"),
   address: addressSchema,
-  clubId: yup.number().required("clubid is required"),
+  clubId: yup.number().required("clubId is required"),
   partnershipId: yup.number().required("partnershipId is required"),
   isAdm: yup.boolean().required("isAdm is required"),
 });

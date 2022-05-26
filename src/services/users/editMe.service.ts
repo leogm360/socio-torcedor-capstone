@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 import useRepo from "../../hooks/useRepo";
 import useError from "../../hooks/useError";
 import { IEditUserMe } from "../../interfaces/users";
@@ -24,9 +26,23 @@ const editMeUserService = async ({ userEmail, toEdit }: IEditUserMe) => {
 
   await users.save({ ...user, ...toEdit });
 
-  return await users.findOneBy(
+  const updatedUser = await users.findOneBy(
     toEdit.email ? { email: toEdit.email } : { email: userEmail }
   );
+
+  if (toEdit.email) {
+    const refreshedToken = jwt.sign(
+      { userEmail: updatedUser!.email },
+      process.env.JWT_SECRET as string
+    );
+
+    return {
+      refreshedToken,
+      updatedUser,
+    };
+  } else {
+    return updatedUser;
+  }
 };
 
 export default editMeUserService;

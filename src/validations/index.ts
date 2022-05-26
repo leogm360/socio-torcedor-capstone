@@ -1,5 +1,5 @@
 export { default as createUserSchema } from "./users/createUser.validation";
-// export {default as} from './users/updateUser.validation'
+export { default as editUserSchema } from "./users/editUser.validation";
 
 export { default as createRewardSchema } from "./rewards/createReward.validation";
 export { default as updateRewardSchema } from "./rewards/updateReward.validation";

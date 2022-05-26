@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-
 import useError from "../../hooks/useError";
 import jwt from "jsonwebtoken";
 

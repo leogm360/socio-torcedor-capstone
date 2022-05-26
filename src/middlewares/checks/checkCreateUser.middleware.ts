@@ -12,6 +12,7 @@ const checkCreateUserMiddleware =
           abortEarly: false,
           stripUnknown: true,
         });
+
         req.newUser = validatedData;
 
         return next();

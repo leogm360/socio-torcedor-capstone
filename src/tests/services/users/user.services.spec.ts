@@ -300,7 +300,6 @@ describe("Unitary User Services on Success", () => {
 
     const name = "Test User Three";
     const userName = "testuserthree";
-    const email = "testuserthree@test.com";
     const password = "197328465";
     const age = 24;
     const gender = "Não Binário";
@@ -312,7 +311,6 @@ describe("Unitary User Services on Success", () => {
     const toEdit = {
       name,
       userName,
-      email,
       password,
       age,
       gender,
@@ -325,28 +323,29 @@ describe("Unitary User Services on Success", () => {
 
     const editedUser = await editOneUserService({ user_id, toEdit });
 
-    expect(editedUser).toBeTruthy();
-    expect(editedUser).toBeInstanceOf(User);
-    expect(editedUser).toEqual(
-      expect.objectContaining({
-        id: "8575e51f-2d48-4297-be3f-c59931638544",
-        name,
-        userName,
-        email,
-        age,
-        gender,
-        phone,
-        isAdm,
-      })
-    );
-    expect(editedUser?.address).toBeInstanceOf(Address);
-    expect(editedUser?.address).toEqual(expect.objectContaining(newAddress));
-    expect(editedUser?.club).toBeInstanceOf(Club);
-    expect(editedUser?.club).toEqual(expect.objectContaining(newClub));
-    expect(editedUser?.partnership).toBeInstanceOf(Partnership);
-    expect(editedUser?.partnership).toEqual(
-      expect.objectContaining(newPartnership)
-    );
+    if (editedUser instanceof User) {
+      expect(editedUser).toBeTruthy();
+      expect(editedUser).toBeInstanceOf(User);
+      expect(editedUser).toEqual(
+        expect.objectContaining({
+          id: "8575e51f-2d48-4297-be3f-c59931638544",
+          name,
+          userName,
+          age,
+          gender,
+          phone,
+          isAdm,
+        })
+      );
+      expect(editedUser.address).toBeInstanceOf(Address);
+      expect(editedUser.address).toEqual(expect.objectContaining(newAddress));
+      expect(editedUser.club).toBeInstanceOf(Club);
+      expect(editedUser.club).toEqual(expect.objectContaining(newClub));
+      expect(editedUser.partnership).toBeInstanceOf(Partnership);
+      expect(editedUser.partnership).toEqual(
+        expect.objectContaining(newPartnership)
+      );
+    }
   });
 
   it("Should be able to edit one User data by user email.", async () => {
@@ -365,7 +364,6 @@ describe("Unitary User Services on Success", () => {
 
     const name = "Test User Four";
     const userName = "testuserFour";
-    const email = "testuserfour@test.com";
     const password = "123456789";
     const age = 28;
     const gender = "Feminino";
@@ -377,7 +375,6 @@ describe("Unitary User Services on Success", () => {
     const toEdit = {
       name,
       userName,
-      email,
       password,
       age,
       gender,
@@ -390,28 +387,29 @@ describe("Unitary User Services on Success", () => {
 
     const editedUser = await editMeUserService({ userEmail, toEdit });
 
-    expect(editedUser).toBeTruthy();
-    expect(editedUser).toBeInstanceOf(User);
-    expect(editedUser).toEqual(
-      expect.objectContaining({
-        id: "8575e51f-2d48-4297-be3f-c59931638545",
-        name,
-        userName,
-        email,
-        age,
-        gender,
-        phone,
-        isAdm,
-      })
-    );
-    expect(editedUser?.address).toBeInstanceOf(Address);
-    expect(editedUser?.address).toEqual(expect.objectContaining(newAddress));
-    expect(editedUser?.club).toBeInstanceOf(Club);
-    expect(editedUser?.club).toEqual(expect.objectContaining(newClub));
-    expect(editedUser?.partnership).toBeInstanceOf(Partnership);
-    expect(editedUser?.partnership).toEqual(
-      expect.objectContaining(newPartnership)
-    );
+    if (editedUser instanceof User) {
+      expect(editedUser).toBeTruthy();
+      expect(editedUser).toBeInstanceOf(User);
+      expect(editedUser).toEqual(
+        expect.objectContaining({
+          id: "8575e51f-2d48-4297-be3f-c59931638545",
+          name,
+          userName,
+          age,
+          gender,
+          phone,
+          isAdm,
+        })
+      );
+      expect(editedUser?.address).toBeInstanceOf(Address);
+      expect(editedUser?.address).toEqual(expect.objectContaining(newAddress));
+      expect(editedUser?.club).toBeInstanceOf(Club);
+      expect(editedUser?.club).toEqual(expect.objectContaining(newClub));
+      expect(editedUser?.partnership).toBeInstanceOf(Partnership);
+      expect(editedUser?.partnership).toEqual(
+        expect.objectContaining(newPartnership)
+      );
+    }
   });
 
   it("Should be able to delete one User data by user id.", async () => {
@@ -423,7 +421,7 @@ describe("Unitary User Services on Success", () => {
   });
 
   it("Should be able to delete one User data by user email.", async () => {
-    const deleted = await deleteMeUserService("testuserfour@test.com");
+    const deleted = await deleteMeUserService("testusertwo@test.com");
 
     expect(deleted).toBe(true);
   });
@@ -565,7 +563,6 @@ describe("Unitary User Services on Fail", () => {
     try {
       await editOneUserService({ user_id, toEdit });
     } catch (e) {
-      console.log(e);
       expect(e).toMatchObject(errConflict);
     }
   });

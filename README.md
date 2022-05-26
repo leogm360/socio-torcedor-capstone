@@ -884,8 +884,8 @@ Content-type: application/json
 ```javascript
 
 *****EXEMPLO*****
-        name: yup.string().required("name is required"),
-        description: yup.string().required("description is required")
+	name: yup.string().required("name is required"),
+        price: yup.number().required("price is required")
 ```
 
 ### Exemplo de Response:
@@ -1225,30 +1225,8 @@ Content-type: application/json
 
 ### Schema de Validação com Yup:
 ```javascript
-
-*****EXEMPLO*****
-name: yup
-        .string()
-	.required()
-	.transform((value, originalValue) => { 
-		return titlelify(originalValue) 
-	}),
-email: yup
-        .string()
-	.email()
-	.required()
-	.transform((value, originalValue) => { 
-		return originalValue.toLowerCase() 
-	}),
-password: yup
-        .string()
-	.required()
-	.transform((value, originalValue) => { 
-		return bcrypt.hashSync(originalValue, 10) 
-	}),
-isAdm: yup
-        .boolean()
-	.required(),
+ 	name: yup.string().required("name is required"),
+        description: yup.string().required("description is required"),
 ```
 OBS.: Chaves não presentes no schema serão removidas.
 
@@ -1407,7 +1385,7 @@ Content-type: application/json
 |----------------|-----------|
 | 403 Forbidden   | User cannot access this resource. 				   |
 | 404 Not Found   | Resource not found 						   |
-| 400 Bad Request | Requisition body must have at least one property to be updated |
+| 400 Bad Request | Either name, description must be provided.                     |
 
 
 ---

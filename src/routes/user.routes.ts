@@ -14,6 +14,7 @@ import {
   checkAuthUserMiddleware,
   checkCreateUserMiddleware,
   checkEditUserMiddleware,
+  checkIsAdminMiddleWare,
 } from "../middlewares";
 import { createUserSchema, editUserSchema } from "../validations";
 
@@ -28,9 +29,9 @@ const userRoutes = () => {
   routes.post("/login", loginUserController);
 
   routes.use("/", checkAuthUserMiddleware);
-  routes.get("/", listUsersController);
+  routes.get("/", checkIsAdminMiddleWare, listUsersController);
   routes.get("/me", listMeUserController);
-  routes.get("/:user_id", listOneUserController);
+  routes.get("/:user_id", checkIsAdminMiddleWare, listOneUserController);
   routes.patch(
     "/me",
     checkEditUserMiddleware(editUserSchema),
@@ -38,11 +39,12 @@ const userRoutes = () => {
   );
   routes.patch(
     "/:user_id",
+    checkIsAdminMiddleWare,
     checkEditUserMiddleware(editUserSchema),
     editOneUserController
   );
   routes.delete("/me", deleteMeUserController);
-  routes.delete("/:user_id", deleteOneUserController);
+  routes.delete("/:user_id", checkIsAdminMiddleWare, deleteOneUserController);
 
   return routes;
 };

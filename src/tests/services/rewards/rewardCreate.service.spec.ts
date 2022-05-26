@@ -1,20 +1,22 @@
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import useError from "../../../hooks/useError";
-import rewardCreateService from "../../../services/rewards/create.service";
-import rewardDeleteOneService from "../../../services/rewards/deleteOne.service";
-import rewardListService from "../../../services/rewards/list.service";
-import rewardListOneService from "../../../services/rewards/listOne.service";
-import rewardUpdateOneService from "../../../services/rewards/updateOne.service";
+import {
+  createRewardService,
+  listRewardsService,
+  listOneRewardService,
+  editOneRewardService,
+  deleteOneRewardService,
+} from "../../../services";
 
 describe("Unitary Create Reward Service on Success", () => {
   let connection: DataSource;
 
-  const rewardOne: any = {
+  const rewardOne = {
     name: "5 Points",
     description: "Gain one ticket for a match for your favorite team",
   };
-  const rewardTwo: any = {
+  const rewardTwo = {
     name: "10 Points",
     description: "Gain one clothes for your favorite team",
   };
@@ -26,14 +28,14 @@ describe("Unitary Create Reward Service on Success", () => {
       })
       .catch((e) => console.error("AppDataSource failed to connect: ", e));
 
-    const newReward = await rewardCreateService(rewardOne);
+    const newReward = await createRewardService(rewardOne);
   });
   afterAll(async () => {
     await connection.destroy();
   });
 
   test("Should be able to create a new Reward.", async () => {
-    const reward = await rewardCreateService(rewardTwo);
+    const reward = await createRewardService(rewardTwo);
 
     expect(reward).toHaveProperty("id");
     expect(reward).toHaveProperty("name");
@@ -42,14 +44,14 @@ describe("Unitary Create Reward Service on Success", () => {
   });
 
   test("Should be able to list all Rewards.", async () => {
-    const listRewards = await rewardListService();
+    const listRewards = await listRewardsService();
 
     expect(listRewards).toHaveLength(2);
     expect(Array.isArray(listRewards)).toBeTruthy();
   });
 
   test("Should be able to list one Reward.", async () => {
-    const listOneReward = await rewardListOneService("1");
+    const listOneReward = await listOneRewardService("1");
 
     expect(listOneReward).toHaveProperty("id");
     expect(listOneReward).toHaveProperty("name");
@@ -58,7 +60,7 @@ describe("Unitary Create Reward Service on Success", () => {
   });
 
   test("Should be able to update a Reward.", async () => {
-    const club = await rewardUpdateOneService({
+    const club = await editOneRewardService({
       reward_id: "1",
       name: "Nova Reward",
       description: "Novo teste",
@@ -69,7 +71,7 @@ describe("Unitary Create Reward Service on Success", () => {
   });
 
   test("Should be able to delete a Reward.", async () => {
-    const club = await rewardDeleteOneService("1");
+    const club = await deleteOneRewardService("1");
 
     expect(club).toBeTruthy();
   });
@@ -101,10 +103,10 @@ describe("Unitary Create Reward Service on Fail", () => {
   });
 
   it("Should throw errConflict for registering a repeated Reward.", async () => {
-    const newClub = await rewardCreateService(rewardOne);
+    const newClub = await createRewardService(rewardOne);
 
     try {
-      await rewardCreateService(rewardOne);
+      await createRewardService(rewardOne);
     } catch (e) {
       expect(e).toMatchObject(errConflict);
     }
@@ -112,7 +114,7 @@ describe("Unitary Create Reward Service on Fail", () => {
 
   it("Should throw errNotFound for listOne a unexisting Reward.", async () => {
     try {
-      await rewardListOneService("100");
+      await listOneRewardService("100");
     } catch (e) {
       expect(e).toMatchObject(errNotFound);
     }
@@ -120,7 +122,7 @@ describe("Unitary Create Reward Service on Fail", () => {
 
   it("Should throw errConflict for update a repeated Club.", async () => {
     try {
-      await rewardUpdateOneService({
+      await editOneRewardService({
         reward_id: "1",
         name: "5 Points",
         description: "Novo teste",
@@ -132,7 +134,7 @@ describe("Unitary Create Reward Service on Fail", () => {
 
   it("Should throw errNotFound for update a unexisting Club.", async () => {
     try {
-      await rewardUpdateOneService({
+      await editOneRewardService({
         reward_id: "100",
         name: "25 Points",
         description: "Novo teste",
@@ -144,7 +146,7 @@ describe("Unitary Create Reward Service on Fail", () => {
 
   it("Should throw errNotFound for delete a unexisting Club.", async () => {
     try {
-      await rewardDeleteOneService("100");
+      await deleteOneRewardService("100");
     } catch (e) {
       expect(e).toMatchObject(errNotFound);
     }

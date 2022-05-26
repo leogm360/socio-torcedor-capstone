@@ -1,7 +1,7 @@
 import useRepo from "../../hooks/useRepo";
 import useError from "../../hooks/useError";
 
-const clubListOneService = async (club_id: String) => {
+const listOneClubService = async (club_id: String) => {
   const { clubs } = useRepo();
   const { errNotFound } = useError();
 
@@ -14,4 +14,4 @@ const clubListOneService = async (club_id: String) => {
   return club;
 };
 
-export default clubListOneService;
+export default listOneClubService;

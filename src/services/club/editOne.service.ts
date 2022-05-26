@@ -2,7 +2,7 @@ import useRepo from "../../hooks/useRepo";
 import useError from "../../hooks/useError";
 import { IClubUpdate } from "../../interfaces/club";
 
-const clubUpdateOneService = async ({ club_id, name }: IClubUpdate) => {
+const editOneClubService = async ({ club_id, name }: IClubUpdate) => {
   const { clubs } = useRepo();
   const { errNotFound, errConflict } = useError();
 
@@ -25,4 +25,4 @@ const clubUpdateOneService = async ({ club_id, name }: IClubUpdate) => {
   return club;
 };
 
-export default clubUpdateOneService;
+export default editOneClubService;

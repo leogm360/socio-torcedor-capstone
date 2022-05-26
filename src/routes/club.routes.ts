@@ -1,12 +1,13 @@
 import { Router } from "express";
-import clubCreateController from "../controllers/club/create.controller";
-import clubDeleteOneController from "../controllers/club/deleteOne.controller";
-import clubListController from "../controllers/club/list.controller";
-import clubListOneController from "../controllers/club/listOne.controller";
-import clubUpdateOneController from "../controllers/club/updateOne.controller";
 import { expressYupMiddleware } from "express-yup-middleware";
-import createClubSchema from "../validations/club/createClub.validation";
-import updateClubSchema from "../validations/club/updateClub.validation";
+import {
+  createClubController,
+  listClubsController,
+  listOneClubController,
+  editOneClubController,
+  deleteOneClubController,
+} from "../controllers";
+import { createClubSchema, updateClubSchema } from "../validations";
 
 const routes = Router();
 
@@ -14,16 +15,16 @@ const clubRoutes = () => {
   routes.post(
     "/",
     expressYupMiddleware({ schemaValidator: createClubSchema }),
-    clubCreateController
+    createClubController
   );
-  routes.get("/", clubListController);
-  routes.get("/:club_id", clubListOneController);
+  routes.get("/", listClubsController);
+  routes.get("/:club_id", listOneClubController);
   routes.patch(
     "/:club_id",
     expressYupMiddleware({ schemaValidator: updateClubSchema }),
-    clubUpdateOneController
+    editOneClubController
   );
-  routes.delete("/:club_id", clubDeleteOneController);
+  routes.delete("/:club_id", deleteOneClubController);
 
   return routes;
 };

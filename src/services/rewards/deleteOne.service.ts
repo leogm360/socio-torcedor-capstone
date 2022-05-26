@@ -1,7 +1,7 @@
 import useRepo from "../../hooks/useRepo";
 import useError from "../../hooks/useError";
 
-const rewardDeleteOneService = async (reward_id: String) => {
+const deleteOneRewardService = async (reward_id: String) => {
   const { rewards } = useRepo();
   const { errNotFound } = useError();
 
@@ -16,4 +16,4 @@ const rewardDeleteOneService = async (reward_id: String) => {
   return true;
 };
 
-export default rewardDeleteOneService;
+export default deleteOneRewardService;

@@ -9,15 +9,18 @@ const loginUserService = async ({ email, userName, password }: ILoginUser) => {
   const { users } = useRepo();
   const { errNotFound, errAccess } = useError();
 
-  const user = await users.findOne({
-    where: [{ email }, { userName }],
-  });
+  const user = await users
+    .createQueryBuilder("users")
+    .addSelect("users.password AS users_password")
+    .where({ email })
+    .orWhere({ userName })
+    .getOne();
 
   if (!user) throw errNotFound;
 
-  bcrypt.compare(password, user.password, (_, result) => {
-    if (!result) throw errAccess;
-  });
+  const compare = await bcrypt.compare(password, user.password);
+
+  if (!compare) throw errAccess;
 
   const token = jwt.sign(
     { userEmail: user.email },

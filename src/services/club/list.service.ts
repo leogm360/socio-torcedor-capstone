@@ -1,6 +1,6 @@
 import useRepo from "../../hooks/useRepo";
 
-const clubListService = async () => {
+const listClubsService = async () => {
   const { clubs } = useRepo();
 
   const listClubs = clubs.find();
@@ -8,4 +8,4 @@ const clubListService = async () => {
   return listClubs;
 };
 
-export default clubListService;
+export default listClubsService;

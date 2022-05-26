@@ -1,11 +1,11 @@
 import { In } from "typeorm";
 import { Reward } from "../../entities";
-import { Partnership } from "../../entities/partnership.entity";
+import { Partnership } from "../../entities";
 import useError from "../../hooks/useError";
 import useRepo from "../../hooks/useRepo";
 import { ICreatePartnership } from "../../interfaces/partnership/index";
 
-const partnershipCreateService = async ({
+const createPartnershipService = async ({
   name,
   price,
   rewards_id,
@@ -34,4 +34,4 @@ const partnershipCreateService = async ({
   return newPartnership;
 };
 
-export default partnershipCreateService;
+export default createPartnershipService;

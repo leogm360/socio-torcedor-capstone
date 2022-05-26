@@ -4,7 +4,7 @@ import useError from "../../hooks/useError";
 import useRepo from "../../hooks/useRepo";
 import { IUpdatePartnership } from "../../interfaces/partnership/index";
 
-const partnershipUpdateOneService = async ({
+const editOnePartnershipService = async ({
   partnership_id,
   name,
   price,
@@ -18,8 +18,6 @@ const partnershipUpdateOneService = async ({
   const partnership = listPartnerships.find(
     (partnership) => partnership.id.toString() === partnership_id
   );
-
-  console.log(partnership?.rewards);
 
   if (!partnership) throw errNotFound;
 
@@ -49,4 +47,4 @@ const partnershipUpdateOneService = async ({
   return partnership;
 };
 
-export default partnershipUpdateOneService;
+export default editOnePartnershipService;

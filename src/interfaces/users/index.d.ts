@@ -1,4 +1,7 @@
-interface IAdress {
+import { Club, Partnership } from "../../entities";
+
+export interface IAddress {
+
   zip_code: string;
   street: string;
   number_house: string;
@@ -16,30 +19,30 @@ export interface ICreateUser {
   age: number;
   gender: string;
   phone: string;
-  address: IAdress;
+  address: IAddress;
   clubId: number;
   partnershipId: number;
   isAdm: boolean;
 }
 
 export interface ILoginUser {
-  email: string;
-  userName: string;
+  email?: string;
+  userName?: string;
   password: string;
 }
 
-export interface IEditUserProps {
+interface IEditUserProps {
   name?: string;
-  user_name?: string;
+  userName?: string;
   email?: string;
   password?: string;
   age?: number;
   gender?: string;
   phone?: string;
-  address?: IAdress;
-  club_id?: number;
-  partnership_id?: number;
-  is_adm?: boolean;
+  address?: IAddress;
+  club?: Club;
+  partnership?: Partnership;
+  isAdm?: boolean;
 }
 
 export interface IEditUserOne {

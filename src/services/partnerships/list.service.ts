@@ -1,6 +1,6 @@
 import useRepo from "../../hooks/useRepo";
 
-const partinershipsListService = async () => {
+const listPartinershipsService = async () => {
   const { partnerships } = useRepo();
 
   const listPartnerships = await partnerships.find();
@@ -8,4 +8,4 @@ const partinershipsListService = async () => {
   return listPartnerships;
 };
 
-export default partinershipsListService;
+export default listPartinershipsService;

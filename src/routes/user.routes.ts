@@ -1,6 +1,4 @@
 import { Router } from "express";
-import { expressYupMiddleware } from "express-yup-middleware";
-
 import {
   createUserController,
   loginUserController,
@@ -11,26 +9,40 @@ import {
   editMeUserController,
   deleteOneUserController,
   deleteMeUserController,
-} from "../controllers/users";
-import { checkAuthUserMiddleware } from "../middlewares/checks";
-import createUserSchema from "../validations/users/createUser.validation";
+} from "../controllers";
+import {
+  checkAuthUserMiddleware,
+  checkCreateUserMiddleware,
+  checkEditUserMiddleware,
+} from "../middlewares";
+import { createUserSchema, editUserSchema } from "../validations";
 
 const routes = Router();
 
 const userRoutes = () => {
   routes.post(
     "/",
-    expressYupMiddleware({ schemaValidator: createUserSchema }),
+    checkCreateUserMiddleware(createUserSchema),
     createUserController
   );
   routes.post("/login", loginUserController);
+
+  routes.use("/", checkAuthUserMiddleware);
   routes.get("/", listUsersController);
+  routes.get("/me", listMeUserController);
   routes.get("/:user_id", listOneUserController);
-  routes.get("/me", checkAuthUserMiddleware, listMeUserController);
-  routes.patch("/:user_id", editOneUserController);
-  routes.patch("/me", checkAuthUserMiddleware, editMeUserController);
+  routes.patch(
+    "/me",
+    checkEditUserMiddleware(editUserSchema),
+    editMeUserController
+  );
+  routes.patch(
+    "/:user_id",
+    checkEditUserMiddleware(editUserSchema),
+    editOneUserController
+  );
+  routes.delete("/me", deleteMeUserController);
   routes.delete("/:user_id", deleteOneUserController);
-  routes.delete("/me", checkAuthUserMiddleware, deleteMeUserController);
 
   return routes;
 };

@@ -5,7 +5,9 @@ const listOneUserService = async (user_id: string) => {
   const { users } = useRepo();
   const { errNotFound } = useError();
 
-  const user = await users.findOneBy({ id: user_id });
+  const listUser = await users.find();
+
+  const user = listUser.find((user) => user.id.toString() === user_id);
 
   if (!user) throw errNotFound;
 

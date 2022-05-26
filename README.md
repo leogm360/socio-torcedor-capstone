@@ -882,8 +882,6 @@ Content-type: application/json
 
 ### Schema de Validação com Yup:
 ```javascript
-
-*****EXEMPLO*****
 	name: yup.string().required("name is required"),
         price: yup.number().required("price is required")
 ```
@@ -1478,8 +1476,6 @@ Content-type: application/json
 
 ### Schema de Validação com Yup:
 ```javascript
-
-*****EXEMPLO*****
 name: yup.string().required("name is required"),
 ```
 OBS.: Chaves não presentes no schema serão removidas.

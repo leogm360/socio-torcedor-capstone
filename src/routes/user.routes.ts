@@ -13,8 +13,9 @@ import {
 import {
   checkAuthUserMiddleware,
   checkCreateUserMiddleware,
+  checkEditUserMiddleware,
 } from "../middlewares";
-import { createUserSchema } from "../validations";
+import { createUserSchema, editUserSchema } from "../validations";
 
 const routes = Router();
 
@@ -25,13 +26,23 @@ const userRoutes = () => {
     createUserController
   );
   routes.post("/login", loginUserController);
+
+  routes.use("/", checkAuthUserMiddleware);
   routes.get("/", listUsersController);
+  routes.get("/me", listMeUserController);
   routes.get("/:user_id", listOneUserController);
-  routes.get("/me", checkAuthUserMiddleware, listMeUserController);
-  routes.patch("/:user_id", editOneUserController);
-  routes.patch("/me", checkAuthUserMiddleware, editMeUserController);
+  routes.patch(
+    "/me",
+    checkEditUserMiddleware(editUserSchema),
+    editMeUserController
+  );
+  routes.patch(
+    "/:user_id",
+    checkEditUserMiddleware(editUserSchema),
+    editOneUserController
+  );
+  routes.delete("/me", deleteMeUserController);
   routes.delete("/:user_id", deleteOneUserController);
-  routes.delete("/me", checkAuthUserMiddleware, deleteMeUserController);
 
   return routes;
 };

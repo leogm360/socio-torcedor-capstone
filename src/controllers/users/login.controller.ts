@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { loginUserService } from "../../services";
-import "express-async-error";
 
 const loginUserController = async (req: Request, res: Response) => {
   const { email, userName, password } = req.body;

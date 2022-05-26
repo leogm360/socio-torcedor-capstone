@@ -22,7 +22,7 @@ jest.mock("uuid");
 
 const { users, clubs, partnerships } = useRepo();
 
-const { errNotFound, errConflict } = useError();
+const { errNotFound, errConflict, errAccess } = useError();
 
 const nameOne = "Test User One";
 const userNameOne = "testusertone";
@@ -444,7 +444,6 @@ describe("Unitary User Services on Fail", () => {
     await connection.destroy();
   });
 
-
   it("Should throw errConflict for creating a repeated User.", async () => {
     const uuidSpy = jest.spyOn(uuid, "v4");
 
@@ -455,22 +454,19 @@ describe("Unitary User Services on Fail", () => {
 
     await partnerships.save(newPartnership);
 
-
     uuidSpy.mockReturnValueOnce("8575e51f-2d48-4297-be3f-c59931638544");
     await createUserService(userOne);
 
     try {
       uuidSpy.mockReturnValueOnce("8575e51f-2d48-4297-be3f-c59931638545");
-      
+
       await createUserService(userOne);
     } catch (e) {
       expect(e).toMatchObject(errConflict);
     }
   });
 
-
   it("Should throw errNotFound for creating an User with an unexisting Club.", async () => {
-
     const newPartnership = partnerships.create(partnership);
 
     await partnerships.save(newPartnership);
@@ -482,9 +478,7 @@ describe("Unitary User Services on Fail", () => {
     }
   });
 
-
   it("Should throw errNotFound for creating an User with an unexisting Partnership.", async () => {
-
     const newClub = clubs.create(club);
 
     await clubs.save(newClub);
@@ -496,6 +490,33 @@ describe("Unitary User Services on Fail", () => {
     }
   });
 
+  it("Should throw errNotFound for loging with an unexisting User.", async () => {
+    try {
+      await loginUserService({ email: emailOne, password: passwordOne });
+    } catch (e) {
+      expect(e).toMatchObject(errNotFound);
+    }
+  });
+
+  it("Should throw errAccess for loging an User with an invalid password.", async () => {
+    const uuidSpy = jest.spyOn(uuid, "v4");
+
+    const newClub = clubs.create(club);
+    const newPartnership = partnerships.create(partnership);
+
+    await clubs.save(newClub);
+
+    await partnerships.save(newPartnership);
+
+    uuidSpy.mockReturnValueOnce("8575e51f-2d48-4297-be3f-c59931638544");
+    await createUserService(userOne);
+
+    try {
+      await loginUserService({ email: emailOne, password: "" });
+    } catch (e) {
+      expect(e).toMatchObject(errAccess);
+    }
+  });
 
   it("Should throw errNotFound for listing an User with a wrong/unexisting id.", async () => {
     try {
@@ -544,6 +565,7 @@ describe("Unitary User Services on Fail", () => {
     try {
       await editOneUserService({ user_id, toEdit });
     } catch (e) {
+      console.log(e);
       expect(e).toMatchObject(errConflict);
     }
   });

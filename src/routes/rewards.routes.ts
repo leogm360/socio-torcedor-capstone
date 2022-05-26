@@ -8,12 +8,18 @@ import {
   deleteOneRewardController,
 } from "../controllers";
 import { createRewardSchema, updateRewardSchema } from "../validations";
+import {
+  checkAuthUserMiddleware,
+  checkIsAdminMiddleWare,
+} from "../middlewares";
 
 const routes = Router();
 
 const rewardsRoutes = () => {
+  routes.use("/", checkAuthUserMiddleware);
   routes.post(
     "/",
+    checkIsAdminMiddleWare,
     expressYupMiddleware({ schemaValidator: createRewardSchema }),
     createRewardController
   );
@@ -21,10 +27,15 @@ const rewardsRoutes = () => {
   routes.get("/:reward_id", listOneRewardController);
   routes.patch(
     "/:reward_id",
+    checkIsAdminMiddleWare,
     expressYupMiddleware({ schemaValidator: updateRewardSchema }),
     editOneRewardController
   );
-  routes.delete("/:reward_id", deleteOneRewardController);
+  routes.delete(
+    "/:reward_id",
+    checkIsAdminMiddleWare,
+    deleteOneRewardController
+  );
 
   return routes;
 };

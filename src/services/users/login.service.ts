@@ -18,9 +18,9 @@ const loginUserService = async ({ email, userName, password }: ILoginUser) => {
 
   if (!user) throw errNotFound;
 
-  bcrypt.compare(password, user.password, (err, result) => {
-    if (!result) throw errAccess;
-  });
+  const compare = await bcrypt.compare(password, user.password);
+
+  if (!compare) throw errAccess;
 
   const token = jwt.sign(
     { userEmail: user.email },

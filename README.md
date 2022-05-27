@@ -256,7 +256,7 @@ OBS.: Chaves não presentes no schema serão removidas.
 				"name": "Desconto ingressos 20",
 				"description": "20% de desconto em ingressos",
 				"created_at": "2022-05-25T16:02:50.918Z",
-				"update_at": "2022-05-25T16:02:50.918Z"
+				"updated_at": "2022-05-25T16:02:50.918Z"
 			}
 		]
 	},
